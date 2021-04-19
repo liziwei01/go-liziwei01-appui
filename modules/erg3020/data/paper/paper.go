@@ -56,7 +56,8 @@ func FormatPaperInfo(ctx context.Context, params searchModel.PaperSearchParams, 
 	// to do
 
 	return map[string]interface{}{
-		"list":  papersInfo,
-		"count": gconv.String(count),
+		"params": params,
+		"list":   papersInfo,
+		"count":  gconv.String(count),
 	}, nil
 }

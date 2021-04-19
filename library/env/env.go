@@ -10,8 +10,18 @@ import (
 var (
 	// DefaultAppName 默认的app名称
 	DefaultAppName = "liziwei01APP"
-	// DefaultRunMode 默认运行等级
-	DefaultRunMode = "debug"
+	// DefaultRunMode 测试默认运行等级
+	DefaultRunMode = RunModeRelease
+)
+
+// 可以依据不同的运行等级来开启不同的调试功能、接口
+const (
+	// RunModeDebug 调试
+	RunModeDebug = "debug"
+	// RunModeTest 测试
+	RunModeTest = "test"
+	// RunModeRelease 线上发布
+	RunModeRelease = "release"
 )
 
 // Option 具体的环境信息

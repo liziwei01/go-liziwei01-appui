@@ -10,6 +10,7 @@ package paper
 
 import (
 	"context"
+	"encoding/json"
 	"fmt"
 	"io"
 	"net/http"
@@ -35,16 +36,20 @@ func GetPaperList(response http.ResponseWriter, request *http.Request) {
 
 	params, valid := inputGetPaperList(ctx, request)
 	if valid == false {
-		io.WriteString(response, "hello, world! error\n")
+		io.WriteString(response, "hello, error\n")
 		return
 	}
 	res, err := paperService.GetPaperList(ctx, params)
 	if err != nil {
-		io.WriteString(response, "hello, world! error\n")
+		io.WriteString(response, "hello, error\n")
 		return
 	}
-
-	io.WriteString(response, res["count"].(string))
+	ret, err := json.Marshal(res)
+	if err != nil {
+		io.WriteString(response, "hello, error\n")
+		return
+	}
+	io.WriteString(response, string(ret))
 }
 
 /**
@@ -54,18 +59,18 @@ func GetPaperList(response http.ResponseWriter, request *http.Request) {
  */
 func inputGetPaperList(ctx context.Context, request *http.Request) (searchModel.PaperSearchParams, bool) {
 	// 客户端接受的参数处理
-	query 				:= request.URL.Query()
-	pageIndexStr 		:= query.Get("pageIndex")   // 选择显示页，默认第1页
-	pageLengthStr 		:= query.Get("pageLength") // 每页显示几条，默认10条
-	authors 			:= query.Get("authors")
+	query := request.URL.Query()
+	pageIndexStr := query.Get("pageIndex")   // 选择显示页，默认第1页
+	pageLengthStr := query.Get("pageLength") // 每页显示几条，默认10条
+	authors := query.Get("authors")
 	publishStartTimeStr := query.Get("startTime") // 按发表时间筛选
-	publishEndTimeStr 	:= query.Get("endTime")     // 按发表时间筛选
+	publishEndTimeStr := query.Get("endTime")     // 按发表时间筛选
 
-	pageIndex 			:= gconv.Uint(pageIndexStr)
-	pageLength 			:= gconv.Uint(pageLengthStr)
-	publishStartTime 	:= gconv.Int64(publishStartTimeStr)
-	publishEndTime 		:= gconv.Int64(publishEndTimeStr)
-	authorsStr 			:= gconv.String(authors)
+	pageIndex := gconv.Uint(pageIndexStr)
+	pageLength := gconv.Uint(pageLengthStr)
+	publishStartTime := gconv.Int64(publishStartTimeStr)
+	publishEndTime := gconv.Int64(publishEndTimeStr)
+	authorsStr := gconv.String(authors)
 
 	if pageIndex == 0 {
 		pageIndex = gconv.Uint("1")
@@ -86,11 +91,11 @@ func inputGetPaperList(ctx context.Context, request *http.Request) (searchModel.
 	}
 
 	params := searchModel.PaperSearchParams{
-		PageIndex:		pageIndex,
-		PageLength:		pageLength,
-		Authors: 		authorsStr,
-		StartTime:		publishStartTime,
-		EndTime:		publishEndTime,
+		PageIndex:  pageIndex,
+		PageLength: pageLength,
+		Authors:    authorsStr,
+		StartTime:  publishStartTime,
+		EndTime:    publishEndTime,
 	}
 	return params, true
 }
