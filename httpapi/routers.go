@@ -10,8 +10,8 @@ package httpapi
 
 import (
 	"fmt"
+	"io"
 	"net/http"
-	"log"
 
 	csc3170Routers "go-liziwei01-appui/modules/csc3170/routers"
 	erg3020Routers "go-liziwei01-appui/modules/erg3020/routers"
@@ -27,8 +27,9 @@ func InitRouters() {
 
 	erg3020Routers.Init()
 	csc3170Routers.Init()
-	err := http.ListenAndServe("localhost:8086", nil)
-	if err != nil {
-		log.Panic("server 500")
-	}
+
+	// 兜底路由
+	http.HandleFunc("/", func(rw http.ResponseWriter, r *http.Request) {
+		io.WriteString(rw, "<br/><br/><center><h1>Hello! THis is Ziwei. Use get method and routers to explore. </h1></center>")
+	})
 }

@@ -9,8 +9,9 @@
 package bootstrap
 
 import (
+	"context"
 	"fmt"
-	"go-liziwei01-appui/httpapi"
+	"log"
 )
 
 /**
@@ -20,5 +21,11 @@ import (
  */
 func Init() {
 	fmt.Println("bootstrap")
-	httpapi.InitRouters()
+	config, err := ParserAppConfig(appConfPath)
+	if err != nil {
+		log.Fatal("init app failed")
+	}
+	fmt.Printf("listen: %s", config.HTTPServer.Listen)
+	app := NewApp(context.Background(), config)
+	app.Start()
 }

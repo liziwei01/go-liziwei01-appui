@@ -6,7 +6,7 @@ go run main.go
 
 域名和接口设置在/go-liziwei01-appui/httpapi package下
 目前ip:port设定为
-localhost:8086
+localhost:8080
 
 论文访问接口为/paperList
 启动APP后使用以下url访问服务
@@ -21,3 +21,5 @@ endTime         默认当天24:00
 
 搜索示例：
 http://localhost:8086/paperList?authors=liziwei
+
+library/env,library/conf内容参考了gdp

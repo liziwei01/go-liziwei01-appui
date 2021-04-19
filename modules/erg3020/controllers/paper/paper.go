@@ -30,6 +30,7 @@ var ctx = context.Background()
  * @return {*}
  */
 func GetPaperList(response http.ResponseWriter, request *http.Request) {
+	// logs.SvrLogger.Notice(ctx, fmt.Sprintf("sqsData.WriteReviewDb for loop start at: %d", time.Now().Unix()))
 	fmt.Println("controller->GetPaperList")
 
 	params, valid := inputGetPaperList(ctx, request)
