@@ -9,7 +9,6 @@
 package httpapi
 
 import (
-	"fmt"
 	"io"
 	"net/http"
 
@@ -23,13 +22,12 @@ import (
  * @return {*}
  */
 func InitRouters() {
-	fmt.Println("init routers")
-
+	// init routers
 	erg3020Routers.Init()
 	csc3170Routers.Init()
 
 	// 兜底路由
 	http.HandleFunc("/", func(rw http.ResponseWriter, r *http.Request) {
-		io.WriteString(rw, "<br/><br/><center><h1>Hello! THis is Ziwei. Use get method and routers to explore. </h1></center>")
+		io.WriteString(rw, "Hello! THis is Ziwei. Use get method and routers to explore.")
 	})
 }

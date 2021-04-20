@@ -9,7 +9,6 @@
 package routers
 
 import (
-	"fmt"
 	"net/http"
 )
 
@@ -19,6 +18,5 @@ import (
  * @return {*}
  */
 func Init() {
-	fmt.Println("modules/csc3170/routers/router.go")
 	http.HandleFunc("/cscList", func(rw http.ResponseWriter, r *http.Request) {})
 }

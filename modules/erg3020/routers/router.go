@@ -9,7 +9,6 @@
 package routers
 
 import(
-	"fmt"
 	"net/http"
 
 	"go-liziwei01-appui/modules/erg3020/controllers/paper"
@@ -22,6 +21,5 @@ import(
  * @return {*}
  */
 func Init() {
-	fmt.Println("modules/erg3020/routers/router.go")
 	http.HandleFunc("/paperList", paper.GetPaperList)
 }

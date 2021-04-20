@@ -3,7 +3,7 @@
  * @Date: 			2021-04-19 15:00:00
  * @LastEditTime: 	2021-04-19 15:00:00
  * @LastEditors: 	liziwei01
- * @Description: 	搜索论文服务后台控制层
+ * @Description: 	搜索论文服务后台控制层：这一层负责与前端交互
  * @FilePath: 		/std/go-liziwei01-appui/modules/erg3020/controllers/paper/paper.go
  */
 package paper
@@ -11,8 +11,8 @@ package paper
 import (
 	"context"
 	"encoding/json"
-	"fmt"
 	"io"
+	"log"
 	"net/http"
 	"time"
 
@@ -31,9 +31,7 @@ var ctx = context.Background()
  * @return {*}
  */
 func GetPaperList(response http.ResponseWriter, request *http.Request) {
-	// logs.SvrLogger.Notice(ctx, fmt.Sprintf("sqsData.WriteReviewDb for loop start at: %d", time.Now().Unix()))
-	fmt.Println("controller->GetPaperList")
-
+	log.Printf("Request from %s\n", request.URL)
 	params, valid := inputGetPaperList(ctx, request)
 	if valid == false {
 		io.WriteString(response, "hello, error\n")
@@ -62,9 +60,11 @@ func inputGetPaperList(ctx context.Context, request *http.Request) (searchModel.
 	query := request.URL.Query()
 	pageIndexStr := query.Get("pageIndex")   // 选择显示页，默认第1页
 	pageLengthStr := query.Get("pageLength") // 每页显示几条，默认10条
+	title := query.Get("title")
 	authors := query.Get("authors")
 	publishStartTimeStr := query.Get("startTime") // 按发表时间筛选
 	publishEndTimeStr := query.Get("endTime")     // 按发表时间筛选
+	journal := query.Get("journal")
 
 	pageIndex := gconv.Uint(pageIndexStr)
 	pageLength := gconv.Uint(pageLengthStr)
@@ -93,9 +93,11 @@ func inputGetPaperList(ctx context.Context, request *http.Request) (searchModel.
 	params := searchModel.PaperSearchParams{
 		PageIndex:  pageIndex,
 		PageLength: pageLength,
+		Title:      title,
 		Authors:    authorsStr,
 		StartTime:  publishStartTime,
 		EndTime:    publishEndTime,
+		Journal:    journal,
 	}
 	return params, true
 }

@@ -9,9 +9,11 @@
 package search
 
 type PaperSearchParams struct {
-	PageIndex		uint	`json:"page_index"`
-	PageLength		uint	`json:"page_length"`
-	Authors			string 	`json:"authors"`
-	StartTime		int64 	`json:"start_time"`
-	EndTime			int64 	`json:"end_time"`
+	PageIndex  uint   `json:"page_index"`
+	PageLength uint   `json:"page_length"`
+	Title      string `json:"title"`
+	Authors    string `json:"authors"`
+	StartTime  int64  `json:"start_time"`
+	EndTime    int64  `json:"end_time"`
+	Journal    string `json:"journal"`
 }

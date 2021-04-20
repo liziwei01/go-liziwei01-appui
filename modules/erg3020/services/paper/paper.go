@@ -3,17 +3,16 @@
  * @Date: 			2021-04-19 15:00:00
  * @LastEditTime: 	2021-04-19 15:00:00
  * @LastEditors: 	liziwei01
- * @Description: 	搜索论文服务服务层
+ * @Description: 	搜索论文服务服务层：这一层提供完整的服务
  * @FilePath: 		go-liziwei01-appui/modules/erg3020/services/paper/paper.go
  */
 package paper
 
-import(
-	"fmt"
+import (
 	"context"
 
-	searchModel "go-liziwei01-appui/modules/erg3020/model/search"
 	paperData "go-liziwei01-appui/modules/erg3020/data/paper"
+	searchModel "go-liziwei01-appui/modules/erg3020/model/search"
 )
 
 /**
@@ -22,7 +21,6 @@ import(
  * @return {map[string]interface{}}
  */
 func GetPaperList(ctx context.Context, params searchModel.PaperSearchParams) (map[string]interface{}, error) {
-	fmt.Println("service->GetPaperList")
 	ret, err := paperData.GetPaperList(ctx, params)
 	if err != nil {
 		return nil, err

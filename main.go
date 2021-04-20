@@ -9,8 +9,6 @@
 package main
 
 import (
-	"fmt"
-
 	"go-liziwei01-appui/bootstrap"
 )
 
@@ -20,6 +18,5 @@ import (
  * @return {*}
  */
 func main() {
-	fmt.Println("main start")
 	bootstrap.Init()
 }

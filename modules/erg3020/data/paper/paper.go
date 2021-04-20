@@ -3,14 +3,13 @@
  * @Date: 			2021-04-19 15:00:00
  * @LastEditTime: 	2021-04-19 15:00:00
  * @LastEditors: 	liziwei01
- * @Description: 	搜索论文服务数据层
+ * @Description: 	搜索论文服务数据层：要从数据库获取或者要写入的数据在这里处理
  * @FilePath: 		go-liziwei01-appui/modules/erg3020/data/paper/paper.go
  */
 package paper
 
 import (
 	"context"
-	"fmt"
 
 	paperDao "go-liziwei01-appui/modules/erg3020/dao/paper"
 	paperModel "go-liziwei01-appui/modules/erg3020/model/paper"
@@ -25,12 +24,10 @@ import (
  * @return {[]paperModel.PaperInfo}
  */
 func GetPaperList(ctx context.Context, params searchModel.PaperSearchParams) ([]paperModel.PaperInfo, error) {
-	fmt.Println("service->GetPaperList")
 	res, err := paperDao.GetPaperList(ctx, params)
 	if err != nil {
 		return make([]paperModel.PaperInfo, 0), err
 	}
-
 	return res, nil
 }
 
@@ -40,9 +37,11 @@ func GetPaperList(ctx context.Context, params searchModel.PaperSearchParams) ([]
  * @return {map[string]interface{}}
  */
 func GetPaperPagesCount(ctx context.Context, params searchModel.PaperSearchParams) (int64, error) {
-	// to do
-
-	return 0, nil
+	count, err := paperDao.GetPaperPagesCount(ctx, params)
+	if err != nil {
+		return 0, err
+	}
+	return count, nil
 }
 
 /**

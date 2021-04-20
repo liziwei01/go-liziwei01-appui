@@ -9,11 +9,11 @@
 package paper
 
 type PaperInfo struct {
-	Order		int64	`ddb:"order" 		json:"order" 		c:"-"`
-	Title		string	`ddb:"title" 		json:"title" 		c:"-"`
-	Authors		string	`ddb:"author" 		json:"authors" 		c:"-"`
-	PublishTime	int64	`ddb:"publish_time" json:"publish_time" c:"-"`
-	Journal		string	`ddb:"journal" 		json:"journal" 		c:"-"`
-	References	string	`ddb:"references" 	json:"references" 	c:"-"`
-	Point		int64	`ddb:"point" 		json:"point"		c:"-"`
+	IndexNumber int64  `db:"index_number"	json:"index_number" c:"-"`
+	Title       string `db:"title" 			json:"title" 		c:"-"`
+	Authors     string `db:"author" 		json:"authors" 		c:"-"`
+	PublishTime int64  `db:"publish_time"	json:"publish_time" c:"-"`
+	Journal     string `db:"journal" 		json:"journal" 		c:"-"`
+	References  string `db:"references" 	json:"references" 	c:"-"`
+	Point       int64  `db:"point" 			json:"point"		c:"-"`
 }

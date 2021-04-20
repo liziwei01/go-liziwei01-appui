@@ -5,9 +5,10 @@ import (
 	"net/http"
 	"path/filepath"
 
-	"go-liziwei01-appui/library/env"
-	"go-liziwei01-appui/library/conf"
 	"go-liziwei01-appui/httpapi"
+	"go-liziwei01-appui/library/conf"
+	"go-liziwei01-appui/library/env"
+	erg3020Dao "go-liziwei01-appui/modules/erg3020/dao"
 )
 
 const (
@@ -58,9 +59,9 @@ func ParserAppConfig(filePath string) (*Config, error) {
 
 // App 应用
 type App struct {
-	ctx      context.Context
-	config   *Config
-	close    func()
+	ctx    context.Context
+	config *Config
+	close  func()
 }
 
 // NewApp 创建应用
@@ -76,7 +77,12 @@ func NewApp(ctx context.Context, c *Config) *App {
 
 // Start 启动服务
 func (app *App) Start() error {
+	// 启动路由分发
 	httpapi.InitRouters()
+	// 启动erg3020数据库
+	erg3020Dao.InitClients()
+	// 启动日志记录
+	// logs.InitLoggers
 	err := http.ListenAndServe(app.config.HTTPServer.Listen, nil)
 	if err != nil {
 		return err
