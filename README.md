@@ -1,9 +1,17 @@
 # go-liziwei01-appui
 
+This is an unfinished class project wriiten by liziwei from CUHK(SZ)
+
+## Install
+
+Just git pull and go run main.go
 在/go-liziwei01-appui/目录下使用
 go run main.go
 编译并运行APP
 
+## Usage
+
+For Project ERG3020 and Project CSC3170
 域名和接口设置在/go-liziwei01-appui/httpapi package下
 目前测试版本ip:port设定为
 localhost:8086
@@ -22,7 +30,11 @@ endTime         默认当天24:00
 搜索示例：
 http://localhost:8086/paperList?authors=liziwei&startTime=1618761600
 
+## Contributing
+
 library/env,library/conf内容参考了gdp
+
+## Database
 
 ERG3020数据库已创建
 使用
@@ -51,3 +63,8 @@ CREATE TABLE `tb_gesture_teleoperation_paper_info` (
   KEY `idx_title_publish_time_point` (`title`,`publish_time`,`point`),
   KEY `idx_author_publish_time_point` (`title`,`publish_time`,`point`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='tb_gesture_teleoperation_paper_info';
+
+
+## License
+
+```
