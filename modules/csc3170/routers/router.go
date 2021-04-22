@@ -10,6 +10,8 @@ package routers
 
 import (
 	"net/http"
+
+	"go-liziwei01-appui/modules/csc3170/controllers/star"
 )
 
 /**
@@ -18,5 +20,9 @@ import (
  * @return {*}
  */
 func Init() {
-	http.HandleFunc("/cscList", func(rw http.ResponseWriter, r *http.Request) {})
+	http.HandleFunc("/insertStars", star.GetStarList)
+	http.HandleFunc("/insertPrograms", star.GetStarList)
+	http.HandleFunc("/insertCompany", star.GetStarList)
+	http.HandleFunc("/insertPlatform", star.GetStarList)
+	http.HandleFunc("/insertUsers", star.GetStarList)
 }

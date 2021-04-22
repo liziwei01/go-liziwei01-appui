@@ -28,7 +28,7 @@ startTime       默认当天0:00，时间戳形式。1618761600表示2021-04-19_
 endTime         默认当天24:00
 
 搜索示例：
-http://localhost:8086/paperList?authors=liziwei&startTime=1618761600
+http://10.30.202.213.:8086/paperList?authors=liziwei&startTime=1618761600
 
 ## Contributing
 
@@ -36,7 +36,7 @@ library/env,library/conf内容参考了gdp
 
 ## Database
 
-ERG3020数据库已创建
+ERG3020数据库已创建`
 使用
 mysql -uerg3020 -pliziwei01 -h10.30.202.213 -P3306 db_liziwei01
 远程登录

@@ -3,10 +3,10 @@
  * @Date: 			2021-04-19 15:00:00
  * @LastEditTime: 	2021-04-19 15:00:00
  * @LastEditors: 	liziwei01
- * @Description: 	搜索论文服务后台控制层：这一层负责与前端交互
- * @FilePath: 		/std/go-liziwei01-appui/modules/erg3020/controllers/paper/paper.go
+ * @Description: 	搜索明星服务后台控制层：这一层负责与前端交互
+ * @FilePath: 		/std/go-liziwei01-appui/modules/csc3170/controllers/paper/star.go
  */
-package paper
+package star
 
 import (
 	"context"
@@ -20,26 +20,26 @@ import (
 
 	"github.com/gogf/gf/util/gconv"
 
-	searchModel "go-liziwei01-appui/modules/erg3020/model/search"
-	paperService "go-liziwei01-appui/modules/erg3020/services/paper"
+	searchModel "go-liziwei01-appui/modules/csc3170/model/search"
+	starService "go-liziwei01-appui/modules/csc3170/services/star"
 )
 
 var ctx = context.Background()
 
 /**
- * @description: 搜索论文服务后台控制层处理逻辑
+ * @description: 搜索明星服务后台控制层处理逻辑
  * @param {http.ResponseWriter} response
  * @param {*http.Request} request
  * @return {*}
  */
-func GetPaperList(response http.ResponseWriter, request *http.Request) {
+func GetStarList(response http.ResponseWriter, request *http.Request) {
 	log.Printf("Request from %s\n", request.URL)
-	params, valid := inputGetPaperList(ctx, request)
+	params, valid := inputGetStarList(ctx, request)
 	if valid == false {
 		io.WriteString(response, "hello, error\n")
 		return
 	}
-	res, err := paperService.GetPaperList(ctx, params)
+	res, err := starService.GetStarList(ctx, params)
 	if err != nil {
 		io.WriteString(response, "hello, error\n")
 		return
@@ -55,9 +55,9 @@ func GetPaperList(response http.ResponseWriter, request *http.Request) {
 /**
  * @description: 提取传入的http请求内的参数
  * @param {*http.Request} request http请求
- * @return {searchModel.PaperSearchParams}
+ * @return {searchModel.StarSearchParams}
  */
-func inputGetPaperList(ctx context.Context, request *http.Request) (searchModel.PaperSearchParams, bool) {
+func inputGetStarList(ctx context.Context, request *http.Request) (searchModel.StarSearchParams, bool) {
 	// 客户端接受的参数处理
 	query := request.URL.Query()
 	name, _ := ioutil.ReadAll(request.Body)
@@ -94,7 +94,7 @@ func inputGetPaperList(ctx context.Context, request *http.Request) (searchModel.
 		_, publishEndTime = getTodayTimeStamp(ctx, publishEndTime)
 	}
 
-	params := searchModel.PaperSearchParams{
+	params := searchModel.StarSearchParams{
 		PageIndex:  pageIndex,
 		PageLength: pageLength,
 		Title:      title,
