@@ -10,20 +10,17 @@ package star
 
 import (
 	"context"
-	"fmt"
 	"log"
 
-	"github.com/gogf/gf/util/gconv"
-
+	baseDao "go-liziwei01-appui/library/mysql"
 	"go-liziwei01-appui/modules/csc3170/constant"
-	baseDao "go-liziwei01-appui/modules/csc3170/dao"
-	starModel "go-liziwei01-appui/modules/csc3170/model/star"
 	searchModel "go-liziwei01-appui/modules/csc3170/model/search"
+	starModel "go-liziwei01-appui/modules/csc3170/model/star"
 )
 
 const (
-	// 论文信息表
-	PAPER_TABLE_NAME = "tb_gesture_teleoperation_star_info"
+	// 用户信息表
+	USER_TABLE_NAME = "tb_star_user_info"
 )
 
 /**
@@ -31,34 +28,70 @@ const (
  * @param {searchModel.StarSearchParams} params
  * @return {[]starModel.StarInfo}
  */
-func GetStarList(ctx context.Context, params searchModel.StarSearchParams) ([]starModel.StarInfo, error) {
-	var res []starModel.StarInfo
-	var intStart = (params.PageIndex - 1) * params.PageLength
-	client, err := baseDao.GetClient(ctx, constant.SERVICE_CONF_DB_NEWAPP_LIZIWEI)
+func InsertUser(ctx context.Context, params starModel.UserInfo) error {
+	client, err := baseDao.GetMysqlClient(ctx, constant.SERVICE_CONF_DB_NEWAPP_LIZIWEI)
 	if err != nil {
-		return make([]starModel.StarInfo, 0), err
+		log.Printf("csc3170.dao.InsertUser GetMysqlClient failed with err: %s\n", err.Error())
+		return err
+	}
+	err = client.Insert(ctx, USER_TABLE_NAME, map[string]interface{}{
+		"user_id":  params.UserId,
+		"name":     "'" + params.UserName + "'",
+		"password": "'" + params.Password + "'",
+	})
+	if err != nil {
+		log.Printf("csc3170.dao.InsertUser Insert failed with err: %s\n", err.Error())
+		return err
+	}
+	return nil
+}
+
+/**
+ * @description: 搜索论文服务后台数据层处理逻辑
+ * @param {searchModel.UserSearchParams} params
+ * @return {[]starModel.UserInfo}
+ */
+func GetUserList(ctx context.Context, params searchModel.UserSearchParams) ([]starModel.UserInfo, error) {
+	var res []starModel.UserInfo
+	var intStart = (params.PageIndex - 1) * params.PageLength
+	client, err := baseDao.GetMysqlClient(ctx, constant.SERVICE_CONF_DB_NEWAPP_LIZIWEI)
+	if err != nil {
+		log.Printf("csc3170.dao.GetUserList GetMysqlClient failed with err: %s\n", err.Error())
+		return make([]starModel.UserInfo, 0), err
 	}
 	where := map[string]interface{}{
-		"_orderby":       "point desc",
-		"_limit":         []uint{intStart, params.PageLength},
-		"title like":     "'%" + params.Title + "%'",
-		"author like":    "'%" + params.Authors + "%'",
-		"publish_time>=": gconv.String(params.StartTime),
-		"publish_time<=": gconv.String(params.EndTime),
-		"journal like":   "'%" + params.Journal + "%'",
+		"_orderby":  "user_id desc",
+		"_limit":    []uint{intStart, params.PageLength},
+		"name like": "'%" + params.UserName + "%'",
 	}
 	columns := []string{"*"}
-	err = client.Query(ctx, PAPER_TABLE_NAME, where, columns, &res)
+	err = client.Query(ctx, USER_TABLE_NAME, where, columns, &res)
 	if err != nil {
-		msg := fmt.Sprintf("[GetStarList] -> get star list from db failed")
-		log.Fatalln(msg)
-		return make([]starModel.StarInfo, 0), err
+		log.Printf("csc3170.dao.GetUserList Query failed with err: %s\n", err.Error())
+		return make([]starModel.UserInfo, 0), err
 	}
 	return res, nil
 }
 
-func GetStarPagesCount(ctx context.Context, params searchModel.StarSearchParams) (int64, error) {
-	// to do
-
-	return 0, nil
+func GetUserPagesCount(ctx context.Context, params searchModel.UserSearchParams) (int64, error) {
+	var (
+		userCount = make([]struct {
+			UserCount int64 `db:"count"`
+		}, 1)
+	)
+	client, err := baseDao.GetMysqlClient(ctx, constant.SERVICE_CONF_DB_NEWAPP_LIZIWEI)
+	if err != nil {
+		log.Printf("csc3170.dao.GetUserPagesCount GetMysqlClient failed with err: %s\n", err.Error())
+		return 0, err
+	}
+	where := map[string]interface{}{
+		"name like": "'%" + params.UserName + "%'",
+	}
+	columns := []string{"count(user_id) as count"}
+	err = client.Query(ctx, USER_TABLE_NAME, where, columns, &userCount)
+	if err != nil {
+		log.Printf("csc3170.dao.GetUserPagesCount Query failed with err: %s\n", err.Error())
+		return 0, err
+	}
+	return userCount[1].UserCount, nil
 }

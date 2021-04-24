@@ -15,8 +15,8 @@ import (
 
 	"github.com/gogf/gf/util/gconv"
 
+	baseDao "go-liziwei01-appui/library/mysql"
 	"go-liziwei01-appui/modules/erg3020/constant"
-	baseDao "go-liziwei01-appui/modules/erg3020/dao"
 	paperModel "go-liziwei01-appui/modules/erg3020/model/paper"
 	searchModel "go-liziwei01-appui/modules/erg3020/model/search"
 )
@@ -34,7 +34,7 @@ const (
 func GetPaperList(ctx context.Context, params searchModel.PaperSearchParams) ([]paperModel.PaperInfo, error) {
 	var res []paperModel.PaperInfo
 	var intStart = (params.PageIndex - 1) * params.PageLength
-	client, err := baseDao.GetClient(ctx, constant.SERVICE_CONF_DB_NEWAPP_LIZIWEI)
+	client, err := baseDao.GetMysqlClient(ctx, constant.SERVICE_CONF_DB_NEWAPP_LIZIWEI)
 	if err != nil {
 		return make([]paperModel.PaperInfo, 0), err
 	}

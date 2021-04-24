@@ -8,7 +8,7 @@ import (
 	"go-liziwei01-appui/httpapi"
 	"go-liziwei01-appui/library/conf"
 	"go-liziwei01-appui/library/env"
-	erg3020Dao "go-liziwei01-appui/modules/erg3020/dao"
+	"go-liziwei01-appui/library/mysql"
 )
 
 const (
@@ -80,7 +80,7 @@ func (app *App) Start() error {
 	// 启动路由分发
 	httpapi.InitRouters()
 	// 启动erg3020数据库
-	erg3020Dao.InitClients()
+	mysql.InitClients()
 	// 启动日志记录
 	// logs.InitLoggers
 	err := http.ListenAndServe(app.config.HTTPServer.Listen, nil)

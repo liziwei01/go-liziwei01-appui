@@ -34,6 +34,7 @@ var ctx = context.Background()
  */
 func GetPaperList(response http.ResponseWriter, request *http.Request) {
 	log.Printf("Request from %s\n", request.URL)
+	log.Print(request)
 	params, valid := inputGetPaperList(ctx, request)
 	if valid == false {
 		io.WriteString(response, "hello, error\n")

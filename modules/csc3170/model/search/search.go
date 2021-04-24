@@ -17,3 +17,11 @@ type StarSearchParams struct {
 	EndTime    int64  `json:"end_time"`
 	Journal    string `json:"journal"`
 }
+
+type UserSearchParams struct {
+	PageIndex    uint   `json:"page_index"`
+	PageLength   uint   `json:"page_length"`
+	UserName     string `json:"user_name"`
+	UserId       int64  `json:"user_id"`
+	UserPassword string `json:"user_password"`
+}

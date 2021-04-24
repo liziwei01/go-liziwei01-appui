@@ -12,32 +12,43 @@ import (
 	"context"
 
 	starDao "go-liziwei01-appui/modules/csc3170/dao/star"
-	starModel "go-liziwei01-appui/modules/csc3170/model/star"
 	searchModel "go-liziwei01-appui/modules/csc3170/model/search"
-
-	"github.com/gogf/gf/util/gconv"
+	starModel "go-liziwei01-appui/modules/csc3170/model/star"
 )
 
 /**
- * @description: 搜索明星服务后台数据层处理逻辑
- * @param {searchModel.StarSearchParams} params
+ * @description: 插入用户数据后台数据层处理逻辑
+ * @param {starModel.UserInfo} params
  * @return {[]starModel.StarInfo}
  */
-func GetStarList(ctx context.Context, params searchModel.StarSearchParams) ([]starModel.StarInfo, error) {
-	res, err := starDao.GetStarList(ctx, params)
+func InsertUser(ctx context.Context, params starModel.UserInfo) error {
+	err := starDao.InsertUser(ctx, params)
 	if err != nil {
-		return make([]starModel.StarInfo, 0), err
+		return err
+	}
+	return nil
+}
+
+/**
+ * @description: 搜索论文服务后台数据层处理逻辑
+ * @param {searchModel.UserSearchParams} params
+ * @return {[]starModel.UserInfo}
+ */
+func GetUserList(ctx context.Context, params searchModel.UserSearchParams) ([]starModel.UserInfo, error) {
+	res, err := starDao.GetUserList(ctx, params)
+	if err != nil {
+		return make([]starModel.UserInfo, 0), err
 	}
 	return res, nil
 }
 
 /**
  * @description: 计数处理
- * @param {searchModel.StarSearchParams} params
+ * @param {starModel.UserInfo} params
  * @return {map[string]interface{}}
  */
-func GetStarPagesCount(ctx context.Context, params searchModel.StarSearchParams) (int64, error) {
-	count, err := starDao.GetStarPagesCount(ctx, params)
+func GetUserPagesCount(ctx context.Context, params searchModel.UserSearchParams) (int64, error) {
+	count, err := starDao.GetUserPagesCount(ctx, params)
 	if err != nil {
 		return 0, err
 	}
@@ -51,12 +62,20 @@ func GetStarPagesCount(ctx context.Context, params searchModel.StarSearchParams)
  * @param {int64} count
  * @return {map[string]interface{}}
  */
-func FormatStarInfo(ctx context.Context, params searchModel.StarSearchParams, starsInfo []starModel.StarInfo, count int64) (map[string]interface{}, error) {
-	// to do
-
+func FormatUserInfo(ctx context.Context, params searchModel.UserSearchParams, userInfo []starModel.UserInfo, count int64) (map[string]interface{}, error) {
+	var (
+		list []map[string]interface{}
+	)
+	for _, v := range userInfo {
+		list = append(list, map[string]interface{}{
+			"user_id":  v.UserId,
+			"name":     v.UserName,
+			"password": v.Password,
+		})
+	}
 	return map[string]interface{}{
-		"params": params,
-		"list":   starsInfo,
-		"count":  gconv.String(count),
+		"list":   list,
+		"count":  count,
+		"errmsg": "success",
 	}, nil
 }

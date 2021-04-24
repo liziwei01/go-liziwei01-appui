@@ -1,4 +1,4 @@
-package dao
+package mysql
 
 import (
 	"context"
@@ -8,8 +8,11 @@ import (
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/gogf/gf/util/gconv"
 	"github.com/jmoiron/sqlx"
+)
 
-	"go-liziwei01-appui/modules/erg3020/constant"
+const (
+	SERVICE_CONF_DB_NEWAPP_LIZIWEI = "db_liziwei01"
+	DB_DRIVER_NAME_MYSQL           = "mysql"
 )
 
 // SelectBuilder 默认的select sql builder
@@ -17,6 +20,11 @@ type SelectBuilder struct {
 	table  string
 	where  map[string]interface{}
 	fields []string
+}
+
+// InsertBuilder 默认的select sql builder
+type InsertBuilder struct {
+	table string
 }
 
 type Client struct {
@@ -27,12 +35,12 @@ var clients []*Client
 
 func InitClients() {
 	clients = append(clients, &Client{
-		Name: constant.SERVICE_CONF_DB_NEWAPP_LIZIWEI,
+		Name: SERVICE_CONF_DB_NEWAPP_LIZIWEI,
 	})
 }
 
-// GetClient 获取创建
-func GetClient(ctx context.Context, serviceName string) (*Client, error) {
+// GetMysqlClient 获取创建
+func GetMysqlClient(ctx context.Context, serviceName string) (*Client, error) {
 	for _, v := range clients {
 		if v.Name == serviceName {
 			return v, nil
@@ -50,6 +58,15 @@ func (dao *Client) Query(ctx context.Context, tableName string, where map[string
 	return nil
 }
 
+func (dao *Client) Insert(ctx context.Context, tableName string, data map[string]interface{}) error {
+	builder := NewInsertBuilder(tableName)
+	err := InsertWithBuilder(ctx, dao, builder, data)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
 func NewSelectBuilder(table string, where map[string]interface{}, fields []string) *SelectBuilder {
 	return &SelectBuilder{
 		table:  table,
@@ -58,15 +75,20 @@ func NewSelectBuilder(table string, where map[string]interface{}, fields []strin
 	}
 }
 
+func NewInsertBuilder(table string) *InsertBuilder {
+	return &InsertBuilder{
+		table: table,
+	}
+}
+
 // QueryWithBuilder 传入一个 SQLBuilder 并执行 QueryContext
 func QueryWithBuilder(ctx context.Context, client *Client, builder *SelectBuilder, data interface{}) error {
 	query := QueryCompiler(ctx, client, builder)
-	db, err := sqlx.Connect(constant.DB_DRIVER_NAME_MYSQL, "erg3020:liziwei01@tcp(10.30.202.213:3306)/"+client.Name)
+	db, err := sqlx.Connect(DB_DRIVER_NAME_MYSQL, "work:liziwei01@tcp(127.0.0.1:3306)/"+client.Name)
 	if err != nil {
 		log.Fatalln(err)
 		return err
 	}
-
 	err = db.Select(data, query)
 	if err != nil {
 		log.Println(err)
@@ -75,13 +97,24 @@ func QueryWithBuilder(ctx context.Context, client *Client, builder *SelectBuilde
 	return nil
 }
 
+// InsertWithBuilder 传入一个 SQLBuilder 并执行 QueryContext
+func InsertWithBuilder(ctx context.Context, client *Client, builder *InsertBuilder, data map[string]interface{}) error {
+	query := InsertCompiler(ctx, client, builder, data)
+	db, err := sqlx.Connect(DB_DRIVER_NAME_MYSQL, "work:liziwei01@tcp(127.0.0.1:3306)/"+client.Name)
+	if err != nil {
+		log.Fatalln(err)
+		return err
+	}
+	_, _ = db.Queryx(query)
+	return nil
+}
+
 func QueryCompiler(ctx context.Context, client *Client, builder *SelectBuilder) string {
 	var (
 		limitPar   []uint
 		orderbyPar string
+		query      = "SELECT"
 	)
-
-	query := "SELECT"
 	for k, v := range builder.fields {
 		if k == 0 {
 			query = query + " " + v
@@ -116,7 +149,38 @@ func QueryCompiler(ctx context.Context, client *Client, builder *SelectBuilder) 
 	if len(limitPar) != 0 {
 		query = query + " LIMIT " + gconv.String(limitPar[0]) + "," + gconv.String(limitPar[1])
 	}
-	// query = query + ";"
+	log.Printf("query: %s\n", query)
+	return query
+}
+
+func InsertCompiler(ctx context.Context, client *Client, builder *InsertBuilder, data map[string]interface{}) string {
+	var (
+		dataMap map[string]interface{}
+		query   = "INSERT INTO " + builder.table + " ("
+	)
+	dataMap = data
+	// fmt.Print(data)
+	// struct 转 map
+	// jsonMarshalData, err := json.Marshal(&data)
+	// if err != nil {
+	// 	log.Fatalf("mysql.InsertCompiler json.Marshal failed with err: %s\n", err.Error())
+	// 	return ""
+	// }
+	// err = json.Unmarshal(jsonMarshalData, &dataMap)
+	// if err != nil {
+	// 	log.Fatalf("mysql.InsertCompiler json.Unmarshal failed with err: %s\n", err.Error())
+	// 	return ""
+	// }
+	for k, _ := range dataMap {
+		query = query + k + ", "
+	}
+	query = query[0 : len(query)-2]
+	query = query + ") VALUES ("
+	for _, v := range dataMap {
+		query = query + gconv.String(v) + ", "
+	}
+	query = query[0 : len(query)-2]
+	query = query + ")"
 	log.Printf("query: %s\n", query)
 	return query
 }

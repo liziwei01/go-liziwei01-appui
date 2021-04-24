@@ -20,9 +20,6 @@ import (
  * @return {*}
  */
 func Init() {
-	http.HandleFunc("/insertStars", star.GetStarList)
-	http.HandleFunc("/insertPrograms", star.GetStarList)
-	http.HandleFunc("/insertCompany", star.GetStarList)
-	http.HandleFunc("/insertPlatform", star.GetStarList)
-	http.HandleFunc("/insertUsers", star.GetStarList)
+	http.HandleFunc("/userList", star.GetUserList)
+	http.HandleFunc("/insertUser", star.InsertUser)
 }

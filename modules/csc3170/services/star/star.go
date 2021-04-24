@@ -13,23 +13,37 @@ import (
 
 	starData "go-liziwei01-appui/modules/csc3170/data/star"
 	searchModel "go-liziwei01-appui/modules/csc3170/model/search"
+	starModel "go-liziwei01-appui/modules/csc3170/model/star"
 )
 
 /**
- * @description: 搜索明星服务后台服务层处理逻辑
- * @param {searchModel.StarSearchParams} params
+ * @description: 插入用户数据后台服务层处理逻辑
+ * @param {starModel.UserInfo} params
  * @return {map[string]interface{}}
  */
-func GetStarList(ctx context.Context, params searchModel.StarSearchParams) (map[string]interface{}, error) {
-	ret, err := starData.GetStarList(ctx, params)
+func InsertUser(ctx context.Context, params starModel.UserInfo) error {
+	err := starData.InsertUser(ctx, params)
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+/**
+ * @description: 获取用户数据后台服务层处理逻辑
+ * @param {starModel.UserInfo} params
+ * @return {map[string]interface{}}
+ */
+func GetUserList(ctx context.Context, params searchModel.UserSearchParams) (map[string]interface{}, error) {
+	ret, err := starData.GetUserList(ctx, params)
 	if err != nil {
 		return nil, err
 	}
-	pages, err := starData.GetStarPagesCount(ctx, params)
+	pages, err := starData.GetUserPagesCount(ctx, params)
 	if err != nil {
 		return nil, err
 	}
-	res, err := starData.FormatStarInfo(ctx, params, ret, pages)
+	res, err := starData.FormatUserInfo(ctx, params, ret, pages)
 	if err != nil {
 		return nil, err
 	}
