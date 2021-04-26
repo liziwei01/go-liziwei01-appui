@@ -48,7 +48,7 @@ func InsertUser(response http.ResponseWriter, request *http.Request) {
 		return
 	}
 	response.WriteHeader(200)
-	response.Write([]byte("{\"errmsg\": \"success\""))
+	response.Write([]byte("{\"errmsg\": \"success\"}"))
 }
 
 /**
