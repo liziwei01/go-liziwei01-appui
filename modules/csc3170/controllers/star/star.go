@@ -12,7 +12,6 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"io"
 	"log"
 	"net/http"
 
@@ -33,18 +32,23 @@ var ctx = context.Background()
  * @return {*}
  */
 func InsertUser(response http.ResponseWriter, request *http.Request) {
+	response.Header().Set("content-type", "text/json")
+	response.Header().Set("Access-Control-Allow-Origin", "*")
 	params, err := inputInsertUser(request)
 	if err != nil {
-		io.WriteString(response, fmt.Sprintf("controller.InsertUser failed with err: %s", err.Error()))
+		response.WriteHeader(400)
+		response.Write([]byte(fmt.Sprintf("controller.InsertUser failed with err: %s", err.Error())))
 		return
 	}
 	fmt.Println(request)
 	err = starService.InsertUser(ctx, params)
 	if err != nil {
-		io.WriteString(response, fmt.Sprintf("controller.InsertUser failed with err: %s", err.Error()))
+		response.WriteHeader(500)
+		response.Write([]byte(fmt.Sprintf("controller.InsertUser failed with err: %s", err.Error())))
 		return
 	}
-	io.WriteString(response, "success")
+	response.WriteHeader(200)
+	response.Write([]byte("{\"errmsg\": \"success\""))
 }
 
 /**
@@ -87,23 +91,29 @@ func inputInsertUser(request *http.Request) (starModel.UserInfo, error) {
  * @return {*}
  */
 func GetUserList(response http.ResponseWriter, request *http.Request) {
+	response.Header().Set("content-type", "text/json")
+	response.Header().Set("Access-Control-Allow-Origin", "*")
 	params, err := inputGetUserList(request)
 	if err != nil {
-		io.WriteString(response, fmt.Sprintf("controller.GetUserList failed with err: %s", err.Error()))
+		response.WriteHeader(400)
+		response.Write([]byte(fmt.Sprintf("controller.GetUserList failed with err: %s", err.Error())))
 		return
 	}
 	fmt.Println(request)
 	res, err := starService.GetUserList(ctx, params)
 	if err != nil {
-		io.WriteString(response, fmt.Sprintf("controller.GetUserList failed with err: %s", err.Error()))
+		response.WriteHeader(404)
+		response.Write([]byte(fmt.Sprintf("controller.GetUserList failed with err: %s", err.Error())))
 		return
 	}
 	ret, err := json.Marshal(res)
 	if err != nil {
-		io.WriteString(response, fmt.Sprintf("controller.GetUserList failed with err: %s", err.Error()))
+		response.WriteHeader(500)
+		response.Write([]byte(fmt.Sprintf("controller.GetUserList failed with err: %s", err.Error())))
 		return
 	}
-	io.WriteString(response, string(ret))
+	response.WriteHeader(200)
+	response.Write(ret)
 }
 
 /**
@@ -121,7 +131,7 @@ func inputGetUserList(request *http.Request) (searchModel.UserSearchParams, erro
 	err := request.ParseForm()
 	if err != nil {
 		log.Printf("csc3170.controller.inputGetUserList request.ParseForm failed with err: %s\n", err.Error())
-		return search.UserSearchParams{}, fmt.Errorf("inputInsertUser->params not enough")
+		return search.UserSearchParams{}, err
 	}
 	fmt.Println("request.PostForm: ")
 	fmt.Println(request.PostForm)
@@ -148,5 +158,5 @@ func inputGetUserList(request *http.Request) (searchModel.UserSearchParams, erro
 	if nameFlag {
 		return ret, nil
 	}
-	return search.UserSearchParams{}, fmt.Errorf("inputInsertUser->params not enough")
+	return search.UserSearchParams{}, fmt.Errorf("inputGetUserList->params not enough")
 }

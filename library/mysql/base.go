@@ -84,7 +84,7 @@ func NewInsertBuilder(table string) *InsertBuilder {
 // QueryWithBuilder 传入一个 SQLBuilder 并执行 QueryContext
 func QueryWithBuilder(ctx context.Context, client *Client, builder *SelectBuilder, data interface{}) error {
 	query := QueryCompiler(ctx, client, builder)
-	db, err := sqlx.Connect(DB_DRIVER_NAME_MYSQL, "work:liziwei01@tcp(127.0.0.1:3306)/"+client.Name)
+	db, err := sqlx.Connect(DB_DRIVER_NAME_MYSQL, "root:Alss1121919@tcp(127.0.0.1:3306)/"+client.Name)
 	if err != nil {
 		log.Fatalln(err)
 		return err
@@ -100,7 +100,7 @@ func QueryWithBuilder(ctx context.Context, client *Client, builder *SelectBuilde
 // InsertWithBuilder 传入一个 SQLBuilder 并执行 QueryContext
 func InsertWithBuilder(ctx context.Context, client *Client, builder *InsertBuilder, data map[string]interface{}) error {
 	query := InsertCompiler(ctx, client, builder, data)
-	db, err := sqlx.Connect(DB_DRIVER_NAME_MYSQL, "work:liziwei01@tcp(127.0.0.1:3306)/"+client.Name)
+	db, err := sqlx.Connect(DB_DRIVER_NAME_MYSQL, "root:Alss1121919@tcp(127.0.0.1:3306)/"+client.Name)
 	if err != nil {
 		log.Fatalln(err)
 		return err
@@ -155,32 +155,18 @@ func QueryCompiler(ctx context.Context, client *Client, builder *SelectBuilder) 
 
 func InsertCompiler(ctx context.Context, client *Client, builder *InsertBuilder, data map[string]interface{}) string {
 	var (
-		dataMap map[string]interface{}
-		query   = "INSERT INTO " + builder.table + " ("
+		query     = "INSERT INTO " + builder.table + " ("
+		prefixLen = len(query)
+		keysLen   = 0
 	)
-	dataMap = data
-	// fmt.Print(data)
-	// struct 转 map
-	// jsonMarshalData, err := json.Marshal(&data)
-	// if err != nil {
-	// 	log.Fatalf("mysql.InsertCompiler json.Marshal failed with err: %s\n", err.Error())
-	// 	return ""
-	// }
-	// err = json.Unmarshal(jsonMarshalData, &dataMap)
-	// if err != nil {
-	// 	log.Fatalf("mysql.InsertCompiler json.Unmarshal failed with err: %s\n", err.Error())
-	// 	return ""
-	// }
-	for k, _ := range dataMap {
-		query = query + k + ", "
-	}
-	query = query[0 : len(query)-2]
-	query = query + ") VALUES ("
-	for _, v := range dataMap {
+
+	for k, v := range data {
+		query = query[0:prefixLen+keysLen] + k + ", " + query[prefixLen+keysLen:]
+		keysLen = keysLen + len(k) + len(", ")
 		query = query + gconv.String(v) + ", "
 	}
-	query = query[0 : len(query)-2]
-	query = query + ")"
+
+	query = query[0:prefixLen+keysLen-2] + ") VALUES (" + query[prefixLen+keysLen:len(query)-2] + ")"
 	log.Printf("query: %s\n", query)
 	return query
 }
