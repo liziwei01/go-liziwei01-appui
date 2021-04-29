@@ -38,7 +38,7 @@ library/env,library/conf内容参考了gdp
 
 ERG3020数据库已创建`
 使用
-mysql -uerg3020 -pliziwei01 -h10.30.202.213 -P3306 db_liziwei01
+mysql -uwork -pliziwei01 -h10.30.202.213 -P3306 db_liziwei01
 远程登录
 
 建表语句：
