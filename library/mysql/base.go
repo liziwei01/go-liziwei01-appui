@@ -84,7 +84,7 @@ func NewInsertBuilder(table string) *InsertBuilder {
 // QueryWithBuilder 传入一个 SQLBuilder 并执行 QueryContext
 func QueryWithBuilder(ctx context.Context, client *Client, builder *SelectBuilder, data interface{}) error {
 	query := QueryCompiler(ctx, client, builder)
-	db, err := sqlx.Connect(DB_DRIVER_NAME_MYSQL, "root:Alss1121919@tcp(127.0.0.1:3306)/"+client.Name)
+	db, err := sqlx.Connect(DB_DRIVER_NAME_MYSQL, "work:liziwei01@tcp(10.30.149.128:3306)/"+client.Name)
 	if err != nil {
 		log.Fatalln(err)
 		return err
@@ -100,7 +100,7 @@ func QueryWithBuilder(ctx context.Context, client *Client, builder *SelectBuilde
 // InsertWithBuilder 传入一个 SQLBuilder 并执行 QueryContext
 func InsertWithBuilder(ctx context.Context, client *Client, builder *InsertBuilder, data map[string]interface{}) error {
 	query := InsertCompiler(ctx, client, builder, data)
-	db, err := sqlx.Connect(DB_DRIVER_NAME_MYSQL, "root:Alss1121919@tcp(127.0.0.1:3306)/"+client.Name)
+	db, err := sqlx.Connect(DB_DRIVER_NAME_MYSQL, "work:liziwei01@tcp(10.30.149.128:3306)/"+client.Name)
 	if err != nil {
 		log.Fatalln(err)
 		return err

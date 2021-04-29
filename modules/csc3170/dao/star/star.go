@@ -60,7 +60,7 @@ func GetUserList(ctx context.Context, params searchModel.UserSearchParams) ([]st
 		return make([]starModel.UserInfo, 0), err
 	}
 	where := map[string]interface{}{
-		"_orderby":  "user_id desc",
+		"_orderby":  "user_id asc",
 		"_limit":    []uint{intStart, params.PageLength},
 		"name like": "'%" + params.UserName + "%'",
 	}

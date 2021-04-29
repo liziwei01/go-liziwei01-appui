@@ -1,0 +1,5 @@
+#!/bin/bash
+
+hostname -i
+
+go run /home/work/go-liziwei01-appui/main.go
