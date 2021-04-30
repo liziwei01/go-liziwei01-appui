@@ -7,7 +7,7 @@
  * @FilePath: 		go-liziwei01-appui/main.go
  */
 
-package mailReport
+package main
 
 import (
 	"fmt"
@@ -15,6 +15,10 @@ import (
 
 	"github.com/jordan-wright/email"
 )
+
+func main() {
+
+}
 
 func Send() error {
 	fmt.Println("Start Send!")

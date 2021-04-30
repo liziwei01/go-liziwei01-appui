@@ -1,7 +1,7 @@
 /*
  * @Author: 		liziwei01
  * @Date: 			2021-04-19 15:00:00
- * @LastEditTime: 	2021-04-19 15:00:00
+ * @LastEditTime: 	2021-04-30 20:00:00
  * @LastEditors: 	liziwei01
  * @Description: 	搜索论文服务后台控制层：这一层负责与前端交互
  * @FilePath: 		/std/go-liziwei01-appui/modules/erg3020/controllers/paper/paper.go
@@ -12,8 +12,6 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"io/ioutil"
-	"log"
 	"net/http"
 	"time"
 
@@ -34,8 +32,6 @@ var ctx = context.Background()
 func GetPaperList(response http.ResponseWriter, request *http.Request) {
 	response.Header().Set("content-type", "text/json")
 	response.Header().Set("Access-Control-Allow-Origin", "*")
-	log.Printf("Request from %s\n", request.URL)
-	log.Print(request)
 	params, err := inputGetPaperList(ctx, request)
 	if err != nil {
 		response.WriteHeader(400)
@@ -54,6 +50,7 @@ func GetPaperList(response http.ResponseWriter, request *http.Request) {
 		response.Write([]byte(fmt.Sprintf("controller.GetPaperList json marshal failed with err: %s", err.Error())))
 		return
 	}
+	response.WriteHeader(200)
 	response.Write(ret)
 }
 
@@ -65,8 +62,6 @@ func GetPaperList(response http.ResponseWriter, request *http.Request) {
 func inputGetPaperList(ctx context.Context, request *http.Request) (searchModel.PaperSearchParams, error) {
 	// 客户端接受的参数处理
 	query := request.URL.Query()
-	name, _ := ioutil.ReadAll(request.Body)
-	fmt.Println(name)
 	pageIndexStr := query.Get("pageIndex")   // 选择显示页，默认第1页
 	pageLengthStr := query.Get("pageLength") // 每页显示几条，默认10条
 	title := query.Get("title")

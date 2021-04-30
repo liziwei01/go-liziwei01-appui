@@ -85,7 +85,7 @@ func NewInsertBuilder(table string) *InsertBuilder {
 // QueryWithBuilder 传入一个 SQLBuilder 并执行 QueryContext
 func QueryWithBuilder(ctx context.Context, client *Client, builder *SelectBuilder, data interface{}) error {
 	query := QueryCompiler(ctx, client, builder)
-	db, err := sqlx.Connect(DB_DRIVER_NAME_MYSQL, "work:liziwei01@tcp(10.30.149.128:3306)/"+client.Name)
+	db, err := sqlx.Connect(DB_DRIVER_NAME_MYSQL, "work:liziwei01@tcp(localhost:3306)/"+client.Name)
 	if err != nil {
 		log.Fatalln(err)
 		return err
@@ -101,7 +101,7 @@ func QueryWithBuilder(ctx context.Context, client *Client, builder *SelectBuilde
 // InsertWithBuilder 传入一个 SQLBuilder 并执行 QueryContext
 func InsertWithBuilder(ctx context.Context, client *Client, builder *InsertBuilder, data map[string]interface{}) error {
 	query := InsertCompiler(ctx, client, builder, data)
-	db, err := sqlx.Connect(DB_DRIVER_NAME_MYSQL, "work:liziwei01@tcp(10.30.149.128:3306)/"+client.Name)
+	db, err := sqlx.Connect(DB_DRIVER_NAME_MYSQL, "work:liziwei01@tcp(localhost:3306)/"+client.Name)
 	if err != nil {
 		log.Fatalln(err)
 		return err
@@ -111,8 +111,9 @@ func InsertWithBuilder(ctx context.Context, client *Client, builder *InsertBuild
 }
 
 func beforeCompiler(ctx context.Context, builder *SelectBuilder) *SelectBuilder {
-	equalSign := false
-	log.Println(builder.where)
+	var (
+		equalSign = false
+	)
 	for k, v := range builder.where {
 		if k[0:1] == "_" || len(gconv.String(v)) == 0 {
 			continue
@@ -130,7 +131,6 @@ func beforeCompiler(ctx context.Context, builder *SelectBuilder) *SelectBuilder 
 			builder.where[k] = "= " + gconv.String(builder.where[k])
 		}
 	}
-	log.Println(builder.where)
 	return builder
 }
 

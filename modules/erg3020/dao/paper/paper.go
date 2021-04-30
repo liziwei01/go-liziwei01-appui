@@ -67,11 +67,11 @@ func GetPaperPagesCount(ctx context.Context, params searchModel.PaperSearchParam
 		return 0, err
 	}
 	where := map[string]interface{}{
-		"title like":     params.Title,
-		"author like":    params.Authors,
+		"title like":      params.Title,
+		"author like":     params.Authors,
 		"publish_time >=": params.StartTime,
 		"publish_time <=": params.EndTime,
-		"journal like":   params.Journal,
+		"journal like":    params.Journal,
 	}
 	columns := []string{"count(index_number) as count"}
 	err = client.Query(ctx, PAPER_TABLE_NAME, where, columns, &paperCount)

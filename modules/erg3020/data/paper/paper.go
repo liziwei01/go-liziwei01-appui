@@ -10,6 +10,7 @@ package paper
 
 import (
 	"context"
+	"time"
 
 	paperDao "go-liziwei01-appui/modules/erg3020/dao/paper"
 	paperModel "go-liziwei01-appui/modules/erg3020/model/paper"
@@ -54,10 +55,11 @@ func FormatPaperInfo(ctx context.Context, params searchModel.PaperSearchParams, 
 		res []map[string]interface{}
 	)
 	for _, v := range papersInfo {
+		timeStr := time.Unix(v.PublishTime, 0).Format("2006-01-02_15:04:05")
 		res = append(res, map[string]interface{}{
 			"title":        v.Title,
 			"authors":      v.Authors,
-			"publish_time": v.PublishTime,
+			"publish_time": timeStr,
 			"journal":      v.Journal,
 			"references":   v.References,
 			"point":        v.Point,

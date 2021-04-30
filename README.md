@@ -30,8 +30,20 @@ startTime       默认当天0:00，时间戳形式。1618761600表示2021-04-19_
 endTime         默认当天24:00                                             否\
 \
 返回示例：\
-
-
+{\
+    "count":1,\
+    "list":[\
+        {\
+            "authors":"liziwei01",\
+            "journal":"nature",\
+            "point":96,\
+            "publish_time":"2021-04-30_23:59:59",\
+            "references":"maybe should be sth here",\
+            "title":"research gesture teleoperation"\
+        }\
+    ]\
+}\
+\
 For Project CSC3170\
 用户访问接口为/userList\
 post参数支持     说明      是否必传\
