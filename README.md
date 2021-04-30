@@ -36,10 +36,19 @@ library内容参考了gdp
 
 ## Database
 
-ERG3020数据库已创建\
 使用\
 mysql -uwork -pliziwei01 -h10.30.202.213 -P3306 db_liziwei01\
 远程登录\
+\
+CSC3170数据表已创建\
+CREATE TABLE `tb_star_user_info` (\
+  `user_id` int unsigned NOT NULL DEFAULT '0' COMMENT 'index_number, primary key',\
+  `name` varchar(256) NOT NULL DEFAULT '' COMMENT 'user name',\
+  `password` varchar(256) NOT NULL DEFAULT '' COMMENT 'user password',\
+  PRIMARY KEY (`user_id`)\
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='明星查询平台用户信息表';\
+\
+ERG3020数据表已创建\
 \
 建表语句：\
 CREATE TABLE `tb_gesture_teleoperation_paper_info` (\
