@@ -36,8 +36,8 @@ func InsertUser(ctx context.Context, params starModel.UserInfo) error {
 	}
 	err = client.Insert(ctx, USER_TABLE_NAME, map[string]interface{}{
 		"user_id":  params.UserId,
-		"name":     "'" + params.UserName + "'",
-		"password": "'" + params.Password + "'",
+		"name":     params.UserName,
+		"password": params.Password,
 	})
 	if err != nil {
 		log.Printf("csc3170.dao.InsertUser Insert failed with err: %s\n", err.Error())
@@ -62,7 +62,7 @@ func GetUserList(ctx context.Context, params searchModel.UserSearchParams) ([]st
 	where := map[string]interface{}{
 		"_orderby":  "user_id asc",
 		"_limit":    []uint{intStart, params.PageLength},
-		"name like": "'%" + params.UserName + "%'",
+		"name like": params.UserName,
 	}
 	columns := []string{"*"}
 	err = client.Query(ctx, USER_TABLE_NAME, where, columns, &res)
@@ -85,7 +85,7 @@ func GetUserPagesCount(ctx context.Context, params searchModel.UserSearchParams)
 		return 0, err
 	}
 	where := map[string]interface{}{
-		"name like": "'%" + params.UserName + "%'",
+		"name like": params.UserName,
 	}
 	columns := []string{"count(user_id) as count"}
 	err = client.Query(ctx, USER_TABLE_NAME, where, columns, &userCount)
