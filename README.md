@@ -29,8 +29,8 @@ authors         默认空                                                   否\
 startTime       默认当天0:00，时间戳形式。1618761600表示2021-04-19_0:00      否\
 endTime         默认当天24:00                                             否\
 \
-搜索示例：\
-http://10.30.202.213.:8086/paperList?authors=liziwei&startTime=1618761600
+返回示例：\
+
 
 For Project CSC3170\
 用户访问接口为/userList\
@@ -56,6 +56,7 @@ mysql -uwork -pliziwei01 -h10.30.202.213 -P3306 db_liziwei01\
 远程登录\
 \
 CSC3170数据表已创建\
+\
 CREATE TABLE `tb_star_user_info` (\
   `user_id` int unsigned NOT NULL DEFAULT '0' COMMENT 'index_number, primary key',\
   `name` varchar(256) NOT NULL DEFAULT '' COMMENT 'user name',\
