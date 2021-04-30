@@ -32,7 +32,7 @@ http://10.30.202.213.:8086/paperList?authors=liziwei&startTime=1618761600
 
 ## Contributing
 
-library/env,library/conf内容参考了gdp
+library内容参考了gdp
 
 ## Database
 
