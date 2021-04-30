@@ -1,6 +1,6 @@
 # go-liziwei01-appui
 
-This is an unfinished class project wriiten by liziwei from CUHK(SZ)
+This is a school project written by liziwei from CUHK(SZ)
 
 ## Install
 
@@ -11,24 +11,40 @@ go run main.go\
 
 ## Usage
 
-For Project ERG3020 and Project CSC3170\
+
 域名和接口设置在/go-liziwei01-appui/httpapi package下\
 目前测试版本ip:port设定为\
 localhost:8086\
+
 \
+For Project ERG3020\
 论文访问接口为/paperList\
 启动APP后使用以下url访问服务\
 http://localhost:8086/paperList?\
 \
-get参数支持\
-pageIndex       默认1\
-pageLength      默认10\
-authors         默认空\
-startTime       默认当天0:00，时间戳形式。1618761600表示2021-04-19_0:00\
-endTime         默认当天24:00\
+get参数支持       说明                                                  是否必传\
+pageIndex       默认1                                                    否\
+pageLength      默认10                                                   否\
+authors         默认空                                                   否\
+startTime       默认当天0:00，时间戳形式。1618761600表示2021-04-19_0:00      否\
+endTime         默认当天24:00                                             否\
 \
 搜索示例：\
 http://10.30.202.213.:8086/paperList?authors=liziwei&startTime=1618761600
+
+For Project CSC3170\
+用户访问接口为/userList\
+post参数支持     说明      是否必传\
+name            用户名称     是\
+pageIndex       默认1       否\
+pageLength      默认10      否\
+\
+用户插入接口为/insertUser\
+post参数支持     说明      是否必传\
+name          用户名称     是\
+ID            用户id      是\
+password      用户密码     是\
+\
 
 ## Contributing
 
