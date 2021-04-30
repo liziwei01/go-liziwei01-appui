@@ -12,7 +12,6 @@ import (
 	"context"
 	"encoding/json"
 	"fmt"
-	"io"
 	"io/ioutil"
 	"log"
 	"net/http"
@@ -55,7 +54,7 @@ func GetPaperList(response http.ResponseWriter, request *http.Request) {
 		response.Write([]byte(fmt.Sprintf("controller.GetPaperList json marshal failed with err: %s", err.Error())))
 		return
 	}
-	io.WriteString(response, string(ret))
+	response.Write(ret)
 }
 
 /**
