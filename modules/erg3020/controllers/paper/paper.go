@@ -33,21 +33,26 @@ var ctx = context.Background()
  * @return {*}
  */
 func GetPaperList(response http.ResponseWriter, request *http.Request) {
+	response.Header().Set("content-type", "text/json")
+	response.Header().Set("Access-Control-Allow-Origin", "*")
 	log.Printf("Request from %s\n", request.URL)
 	log.Print(request)
-	params, valid := inputGetPaperList(ctx, request)
-	if valid == false {
-		io.WriteString(response, "hello, error\n")
+	params, err := inputGetPaperList(ctx, request)
+	if err != nil {
+		response.WriteHeader(400)
+		response.Write([]byte(fmt.Sprintf("controller.GetPaperList failed with err: %s", err.Error())))
 		return
 	}
 	res, err := paperService.GetPaperList(ctx, params)
 	if err != nil {
-		io.WriteString(response, "hello, error\n")
+		response.WriteHeader(500)
+		response.Write([]byte(fmt.Sprintf("controller.GetPaperList failed with err: %s", err.Error())))
 		return
 	}
 	ret, err := json.Marshal(res)
 	if err != nil {
-		io.WriteString(response, "hello, error\n")
+		response.WriteHeader(500)
+		response.Write([]byte(fmt.Sprintf("controller.GetPaperList json marshal failed with err: %s", err.Error())))
 		return
 	}
 	io.WriteString(response, string(ret))
@@ -58,7 +63,7 @@ func GetPaperList(response http.ResponseWriter, request *http.Request) {
  * @param {*http.Request} request http请求
  * @return {searchModel.PaperSearchParams}
  */
-func inputGetPaperList(ctx context.Context, request *http.Request) (searchModel.PaperSearchParams, bool) {
+func inputGetPaperList(ctx context.Context, request *http.Request) (searchModel.PaperSearchParams, error) {
 	// 客户端接受的参数处理
 	query := request.URL.Query()
 	name, _ := ioutil.ReadAll(request.Body)
@@ -104,7 +109,7 @@ func inputGetPaperList(ctx context.Context, request *http.Request) (searchModel.
 		EndTime:    publishEndTime,
 		Journal:    journal,
 	}
-	return params, true
+	return params, nil
 }
 
 /**

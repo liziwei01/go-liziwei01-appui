@@ -58,7 +58,28 @@ func GetPaperList(ctx context.Context, params searchModel.PaperSearchParams) ([]
 }
 
 func GetPaperPagesCount(ctx context.Context, params searchModel.PaperSearchParams) (int64, error) {
-	// to do
-
-	return 0, nil
+	var (
+		paperCount = make([]struct {
+			Count int64 `db:"count"`
+		}, 1)
+	)
+	client, err := baseDao.GetMysqlClient(ctx, constant.SERVICE_CONF_DB_NEWAPP_LIZIWEI)
+	if err != nil {
+		log.Printf("csc3170.dao.GetUserPagesCount GetMysqlClient failed with err: %s\n", err.Error())
+		return 0, err
+	}
+	where := map[string]interface{}{
+		"title like":     "'%" + params.Title + "%'",
+		"author like":    "'%" + params.Authors + "%'",
+		"publish_time>=": gconv.String(params.StartTime),
+		"publish_time<=": gconv.String(params.EndTime),
+		"journal like":   "'%" + params.Journal + "%'",
+	}
+	columns := []string{"count(index_number) as count"}
+	err = client.Query(ctx, PAPER_TABLE_NAME, where, columns, &paperCount)
+	if err != nil {
+		log.Printf("csc3170.dao.GetUserPagesCount Query failed with err: %s\n", err.Error())
+		return 0, err
+	}
+	return paperCount[1].Count, nil
 }

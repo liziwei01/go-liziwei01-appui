@@ -7,7 +7,7 @@ APPNAME = $(shell basename `pwd`)
 OUTPUT_FILE=${APPNAME}.tar.gz
 
 #初始化命令变量
-GOROOT  := $(HOMEDIR)/../../GOROOT/go14
+GOROOT  := /usr/local/go
 GO      := $(GOROOT)/bin/go
 GOPATH  := $(shell $(GO) env GOPATH)
 GOMOD   := $(GO) mod
@@ -19,16 +19,8 @@ SCRIPT_LIST := $(shell cd $(HOMEDIR) && ls scripts/erg3020/*/*.go && cd $(HOMEDI
 SCRIPT_TARGET := $(SCRIPT_LIST:%.go=%)
 
 #执行编译，可使用命令 make 或 make all 执行, 顺序执行prepare -> compile -> test -> package 几个阶段
-all: prepare compile package
-all-offline: prepare compile package-offline
-
-# prepare阶段, 使用bcloud下载非Go依赖，使用GOD下载Go依赖, 可单独执行命令: make prepare
-prepare: prepare-dep
-
-prepare-dep:
-	git config --global http.sslVerify false
-	bcloud local -U #下载非Go依赖，依赖之前的BCLOUD文件
-
+all: compile package
+all-offline: compile package-offline
 
 #complile阶段，执行编译命令,可单独执行命令: make compile
 compile:build
@@ -53,9 +45,7 @@ package-bin:
 	$(shell mkdir -p $(OUTDIR))
 	$(shell cp -a bin $(OUTDIR)/bin)
 	$(shell cp -a conf $(OUTDIR)/conf)
-	$(shell cp -a supervise $(OUTDIR)/supervise)
 	$(shell cp -a scripts $(OUTDIR)/scripts)
-	$(shell cp -a eksconf $(OUTDIR)/eksconf)
 	$(shell if [ -d "data_online"  ]; then cp -r data_online $(OUTDIR)/data; fi)
 	$(shell cd $(OUTDIR)/; tar -zcf ${OUTPUT_FILE} ./*; rm -rf bin conf supervise data scripts)
 
@@ -65,9 +55,7 @@ package-bin-offline:
 	$(shell mkdir -p $(OUTDIR))
 	$(shell cp -a bin $(OUTDIR)/bin)
 	$(shell cp -a conf_offline $(OUTDIR)/conf)
-	$(shell cp -a supervise $(OUTDIR)/supervise)
 	$(shell cp -a scripts $(OUTDIR)/scripts)
-	$(shell cp -a eksconf $(OUTDIR)/eksconf)
 	$(shell if [ -d "data"  ]; then cp -r data $(OUTDIR)/data; fi)
 	$(shell cd $(OUTDIR)/; tar -zcf ${OUTPUT_FILE} ./*; rm -rf bin conf supervise data scripts)
 

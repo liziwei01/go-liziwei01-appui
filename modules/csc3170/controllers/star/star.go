@@ -40,7 +40,6 @@ func InsertUser(response http.ResponseWriter, request *http.Request) {
 		response.Write([]byte(fmt.Sprintf("controller.InsertUser failed with err: %s", err.Error())))
 		return
 	}
-	fmt.Println(request)
 	err = starService.InsertUser(ctx, params)
 	if err != nil {
 		response.WriteHeader(500)
