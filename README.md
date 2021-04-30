@@ -44,7 +44,6 @@ post参数支持     说明      是否必传\
 name          用户名称     是\
 ID            用户id      是\
 password      用户密码     是\
-\
 
 ## Contributing
 
