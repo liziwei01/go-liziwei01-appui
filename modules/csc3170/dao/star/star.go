@@ -52,19 +52,25 @@ func InsertUser(ctx context.Context, params starModel.UserInfo) error {
  * @return {[]starModel.UserInfo}
  */
 func GetUserList(ctx context.Context, params searchModel.UserSearchParams) ([]starModel.UserInfo, error) {
-	var res []starModel.UserInfo
-	var intStart = (params.PageIndex - 1) * params.PageLength
+	var (
+		res      []starModel.UserInfo
+		intStart = (params.PageIndex - 1) * params.PageLength
+	)
+	// 获取Client
 	client, err := baseDao.GetMysqlClient(ctx, constant.SERVICE_CONF_DB_NEWAPP_LIZIWEI)
 	if err != nil {
 		log.Printf("csc3170.dao.GetUserList GetMysqlClient failed with err: %s\n", err.Error())
 		return make([]starModel.UserInfo, 0), err
 	}
+	// 搜索关键词
 	where := map[string]interface{}{
 		"_orderby":  "user_id asc",
 		"_limit":    []uint{intStart, params.PageLength},
 		"name like": params.UserName,
 	}
+	// 需求的列
 	columns := []string{"*"}
+	// 使用Client进行搜索并在res中获取返回数据
 	err = client.Query(ctx, USER_TABLE_NAME, where, columns, &res)
 	if err != nil {
 		log.Printf("csc3170.dao.GetUserList Query failed with err: %s\n", err.Error())

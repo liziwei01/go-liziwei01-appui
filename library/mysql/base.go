@@ -87,12 +87,10 @@ func QueryWithBuilder(ctx context.Context, client *Client, builder *SelectBuilde
 	query := QueryCompiler(ctx, client, builder)
 	db, err := sqlx.Connect(DB_DRIVER_NAME_MYSQL, "work:liziwei01@tcp(localhost:3306)/"+client.Name)
 	if err != nil {
-		log.Fatalln(err)
 		return err
 	}
 	err = db.Select(data, query)
 	if err != nil {
-		log.Println(err)
 		return err
 	}
 	return nil
@@ -103,10 +101,12 @@ func InsertWithBuilder(ctx context.Context, client *Client, builder *InsertBuild
 	query := InsertCompiler(ctx, client, builder, data)
 	db, err := sqlx.Connect(DB_DRIVER_NAME_MYSQL, "work:liziwei01@tcp(localhost:3306)/"+client.Name)
 	if err != nil {
-		log.Fatalln(err)
 		return err
 	}
-	_, _ = db.Queryx(query)
+	_, err = db.Queryx(query)
+	if err != nil {
+		return err
+	}
 	return nil
 }
 

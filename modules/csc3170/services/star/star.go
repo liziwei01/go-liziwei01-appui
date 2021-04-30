@@ -35,14 +35,17 @@ func InsertUser(ctx context.Context, params starModel.UserInfo) error {
  * @return {map[string]interface{}}
  */
 func GetUserList(ctx context.Context, params searchModel.UserSearchParams) (map[string]interface{}, error) {
+	// 从数据库获取前端要求数量的用户名单，如：要求搜索第二页5个人则limit 1,5
 	ret, err := starData.GetUserList(ctx, params)
 	if err != nil {
 		return nil, err
 	}
+	// 统计符合关键词要求的数据总量交给前端分页
 	pages, err := starData.GetUserPagesCount(ctx, params)
 	if err != nil {
 		return nil, err
 	}
+	// 处理数据，如：将时间戳转换为便于理解的年月日
 	res, err := starData.FormatUserInfo(ctx, params, ret, pages)
 	if err != nil {
 		return nil, err
