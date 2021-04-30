@@ -4,6 +4,7 @@ import (
 	"context"
 	"fmt"
 	"log"
+	"reflect"
 
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/gogf/gf/util/gconv"
@@ -109,12 +110,37 @@ func InsertWithBuilder(ctx context.Context, client *Client, builder *InsertBuild
 	return nil
 }
 
+func beforeCompiler(ctx context.Context, builder *SelectBuilder) *SelectBuilder {
+	equalSign := false
+	log.Println(builder.where)
+	for k, v := range builder.where {
+		if k[0:1] == "_" || len(gconv.String(v)) == 0 {
+			continue
+		}
+		if len(k) > 4 && k[len(k)-4:] == "like" {
+			builder.where[k] = "%" + gconv.String(v) + "%"
+		} else if k[len(k)-1:] == "=" || k[len(k)-1:] == ">" || k[len(k)-1:] == "<" {
+		} else {
+			equalSign = true
+		}
+		if reflect.TypeOf(v) == reflect.TypeOf("") {
+			builder.where[k] = "'" + gconv.String(builder.where[k]) + "'"
+		}
+		if equalSign {
+			builder.where[k] = "= " + gconv.String(builder.where[k])
+		}
+	}
+	log.Println(builder.where)
+	return builder
+}
+
 func QueryCompiler(ctx context.Context, client *Client, builder *SelectBuilder) string {
 	var (
 		limitPar   []uint
 		orderbyPar string
 		query      = "SELECT"
 	)
+	builder = beforeCompiler(ctx, builder)
 	for k, v := range builder.fields {
 		if k == 0 {
 			query = query + " " + v
@@ -125,21 +151,22 @@ func QueryCompiler(ctx context.Context, client *Client, builder *SelectBuilder) 
 	query = query + " FROM " + builder.table + " WHERE "
 	count := 0
 	for k, v := range builder.where {
+		// _特殊处理
 		if k[0:1] == "_" {
 			if k[1:] == "limit" {
 				limitPar = v.([]uint)
 			} else if k[1:] == "orderby" {
-				orderbyPar = v.(string)
+				orderbyPar = gconv.String(v)
 			}
 		} else {
-			if v.(string) == "" || v.(string) == "''" || v.(string) == "'%%'" {
+			if gconv.String(v) == "" || gconv.String(v) == "''" || gconv.String(v) == "'%%'" {
 				continue
 			}
 			if count == 0 {
-				query = query + k + v.(string)
+				query = query + k + " " + gconv.String(v)
 				count++
 			} else {
-				query = query + " and " + k + v.(string)
+				query = query + " and " + k + " " + gconv.String(v)
 			}
 		}
 	}

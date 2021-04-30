@@ -13,8 +13,6 @@ import (
 	"fmt"
 	"log"
 
-	"github.com/gogf/gf/util/gconv"
-
 	baseDao "go-liziwei01-appui/library/mysql"
 	"go-liziwei01-appui/modules/erg3020/constant"
 	paperModel "go-liziwei01-appui/modules/erg3020/model/paper"
@@ -39,13 +37,13 @@ func GetPaperList(ctx context.Context, params searchModel.PaperSearchParams) ([]
 		return make([]paperModel.PaperInfo, 0), err
 	}
 	where := map[string]interface{}{
-		"_orderby":       "point desc",
-		"_limit":         []uint{intStart, params.PageLength},
-		"title like":     "'%" + params.Title + "%'",
-		"author like":    "'%" + params.Authors + "%'",
-		"publish_time>=": gconv.String(params.StartTime),
-		"publish_time<=": gconv.String(params.EndTime),
-		"journal like":   "'%" + params.Journal + "%'",
+		"_orderby":        "point desc",
+		"_limit":          []uint{intStart, params.PageLength},
+		"title like":      params.Title,
+		"author like":     params.Authors,
+		"publish_time >=": params.StartTime,
+		"publish_time <=": params.EndTime,
+		"journal like":    params.Journal,
 	}
 	columns := []string{"*"}
 	err = client.Query(ctx, PAPER_TABLE_NAME, where, columns, &res)
@@ -69,11 +67,11 @@ func GetPaperPagesCount(ctx context.Context, params searchModel.PaperSearchParam
 		return 0, err
 	}
 	where := map[string]interface{}{
-		"title like":     "'%" + params.Title + "%'",
-		"author like":    "'%" + params.Authors + "%'",
-		"publish_time>=": gconv.String(params.StartTime),
-		"publish_time<=": gconv.String(params.EndTime),
-		"journal like":   "'%" + params.Journal + "%'",
+		"title like":     params.Title,
+		"author like":    params.Authors,
+		"publish_time >=": params.StartTime,
+		"publish_time <=": params.EndTime,
+		"journal like":   params.Journal,
 	}
 	columns := []string{"count(index_number) as count"}
 	err = client.Query(ctx, PAPER_TABLE_NAME, where, columns, &paperCount)
