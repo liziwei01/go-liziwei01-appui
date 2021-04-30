@@ -14,8 +14,6 @@ import (
 	paperDao "go-liziwei01-appui/modules/erg3020/dao/paper"
 	paperModel "go-liziwei01-appui/modules/erg3020/model/paper"
 	searchModel "go-liziwei01-appui/modules/erg3020/model/search"
-
-	"github.com/gogf/gf/util/gconv"
 )
 
 /**
@@ -52,11 +50,21 @@ func GetPaperPagesCount(ctx context.Context, params searchModel.PaperSearchParam
  * @return {map[string]interface{}}
  */
 func FormatPaperInfo(ctx context.Context, params searchModel.PaperSearchParams, papersInfo []paperModel.PaperInfo, count int64) (map[string]interface{}, error) {
-	// to do
-
+	var (
+		res []map[string]interface{}
+	)
+	for _, v := range papersInfo {
+		res = append(res, map[string]interface{}{
+			"title":        v.Title,
+			"authors":      v.Authors,
+			"publish_time": v.PublishTime,
+			"journal":      v.Journal,
+			"references":   v.References,
+			"point":        v.Point,
+		})
+	}
 	return map[string]interface{}{
-		"params": params,
-		"list":   papersInfo,
-		"count":  gconv.String(count),
+		"list":  res,
+		"count": count,
 	}, nil
 }
