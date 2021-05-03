@@ -9,7 +9,7 @@ Just git pull and go run main.go\
 go run main.go\
 编译并运行APP
 
-## Usage
+## Use
 
 
 域名和接口设置在/go-liziwei01-appui/httpapi package下\
@@ -55,7 +55,7 @@ pageLength      默认10      否\
 post参数支持     说明      是否必传\
 name          用户名称     是\
 ID            用户id      是\
-password      用户密码     是\
+password      用户密码     是
 
 ## Contributing
 
@@ -92,7 +92,7 @@ CREATE TABLE `tb_gesture_teleoperation_paper_info` (\
   KEY `idx_title` (`title`),\
   KEY `idx_author` (`author`),\
   KEY `idx_journal` (`journal`)\
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='tb_gesture_teleoperation_paper_info';\
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='tb_gesture_teleoperation_paper_info';
 
 ## License
 
