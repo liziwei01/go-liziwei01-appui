@@ -17,7 +17,7 @@ import (
 )
 
 func main() {
-
+	Send()
 }
 
 func Send() error {

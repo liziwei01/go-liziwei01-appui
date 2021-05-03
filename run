@@ -1,4 +1,6 @@
 #!/bin/bash
+echo "alias ll='ls -al'" >> ~/.bashrc
+source ~/.bashrc
 
 hostname -i
 

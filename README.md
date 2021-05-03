@@ -80,26 +80,19 @@ ERG3020数据表已创建\
 \
 建表语句：\
 CREATE TABLE `tb_gesture_teleoperation_paper_info` (\
-  `index_number` int(11) unsigned NOT NULL DEFAULT '0' COMMENT 'index_number, primary key',\
-  `title` varchar(256) NOT NULL DEFAULT '' COMMENT '',\
-  `author` varchar(256) NOT NULL DEFAULT '' COMMENT 'json',\
-  `publish_time` int(11) unsigned NOT NULL DEFAULT '0' COMMENT '',\
-  `journal` varchar(256) NOT NULL DEFAULT '' COMMENT 'journal',\
-  `references` varchar(10240) NOT NULL DEFAULT '' COMMENT 'references',\
-  `point` int(11) unsigned NOT NULL DEFAULT '0' COMMENT 'point',]\
+  `index_number` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT 'auto increment primary key',\
+  `title` varchar(256) NOT NULL DEFAULT '' COMMENT 'title',\
+  `author` varchar(1024) NOT NULL DEFAULT '' COMMENT 'separated by comma',\
+  `publish_time` int(11) unsigned NOT NULL DEFAULT '0' COMMENT 'time stamp',\
+  `journal` varchar(256) NOT NULL DEFAULT '' COMMENT 'publisher',\
+  `references` varchar(10240) NOT NULL DEFAULT '' COMMENT 'separated by comma',\
+  `total_cites` int(11) unsigned NOT NULL DEFAULT '0' COMMENT 'total cites',\
+  `score` int unsigned NOT NULL DEFAULT '0' COMMENT 'score',\
   PRIMARY KEY (`index_number`),\
   KEY `idx_title` (`title`),\
   KEY `idx_author` (`author`),\
-  KEY `idx_publish_time` (`publish_time`),\
-  KEY `idx_journal` (`journal`),\
-\
-  KEY `idx_title_point` (`title`,`point`),\
-  KEY `idx_author_point` (`author`,`point`),\
-  KEY `idx_journal_point` (`journal`,`point`),\
-\
-  KEY `idx_title_publish_time_point` (`title`,`publish_time`,`point`),\
-  KEY `idx_author_publish_time_point` (`title`,`publish_time`,`point`)\
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='tb_gesture_teleoperation_paper_info';
+  KEY `idx_journal` (`journal`)\
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='tb_gesture_teleoperation_paper_info';\
 
 ## License
 
