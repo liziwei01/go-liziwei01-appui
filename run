@@ -1,7 +1,0 @@
-#!/bin/bash
-echo "alias ll='ls -al'" >> ~/.bashrc
-source ~/.bashrc
-
-hostname -i
-
-go run /home/work/go-liziwei01-appui/main.go
