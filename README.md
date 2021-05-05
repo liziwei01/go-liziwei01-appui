@@ -33,17 +33,17 @@ key                                                                     否\
 \
 返回示例：\
 {\
-    "count":1,\
-    "list":[\
-        {\
-            "authors":"liziwei01",\
-            "journal":"nature",\
-            "point":96,\
-            "publish_time":"2021-04-30_23:59:59",\
-            "references":"maybe should be sth here",\
-            "title":"research gesture teleoperation"\
-        }\
-    ]\
+&emsp;&emsp;&emsp;&emsp;"count":1,\
+&emsp;&emsp;&emsp;&emsp;"list":[\
+&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;{\
+&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;"authors":"liziwei01",\
+&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;"journal":"nature",\
+&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;"point":96,\
+&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;"publish_time":"2021-04-30_23:59:59",\
+&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;"references":"maybe should be sth here",\
+&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;"title":"research gesture teleoperation"\
+&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;&emsp;}\
+&emsp;&emsp;&emsp;&emsp;]\
 }\
 \
 For Project CSC3170\
@@ -72,28 +72,28 @@ mysql -uwork -pliziwei01 -h10.30.202.213 -P3306 db_liziwei01\
 CSC3170数据表已创建\
 \
 CREATE TABLE `tb_star_user_info` (\
-  `user_id` int unsigned NOT NULL DEFAULT '0' COMMENT 'index_number, primary key',\
-  `name` varchar(256) NOT NULL DEFAULT '' COMMENT 'user name',\
-  `password` varchar(256) NOT NULL DEFAULT '' COMMENT 'user password',\
-  PRIMARY KEY (`user_id`)\
+&emsp;&emsp;`user_id` int unsigned NOT NULL DEFAULT '0' COMMENT 'index_number, primary key',\
+&emsp;&emsp;`name` varchar(256) NOT NULL DEFAULT '' COMMENT 'user name',\
+&emsp;&emsp;`password` varchar(256) NOT NULL DEFAULT '' COMMENT 'user password',\
+&emsp;&emsp;PRIMARY KEY (`user_id`)\
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='明星查询平台用户信息表';\
 \
 ERG3020数据表已创建\
 \
 建表语句：\
 CREATE TABLE `tb_gesture_teleoperation_paper_info` (\
-  `index_number` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT 'auto increment primary key',\
-  `title` varchar(256) NOT NULL DEFAULT '' COMMENT 'title',\
-  `author` varchar(1024) NOT NULL DEFAULT '' COMMENT 'separated by comma',\
-  `publish_time` int(11) unsigned NOT NULL DEFAULT '0' COMMENT 'time stamp',\
-  `journal` varchar(256) NOT NULL DEFAULT '' COMMENT 'publisher',\
-  `references` varchar(10240) NOT NULL DEFAULT '' COMMENT 'separated by comma',\
-  `total_cites` int(11) unsigned NOT NULL DEFAULT '0' COMMENT 'total cites',\
-  `score` int unsigned NOT NULL DEFAULT '0' COMMENT 'score',\
-  PRIMARY KEY (`index_number`),\
-  KEY `idx_title` (`title`),\
-  KEY `idx_author` (`author`),\
-  KEY `idx_journal` (`journal`)\
+&emsp;&emsp;`index_number` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT 'auto increment primary key',\
+&emsp;&emsp;`title` varchar(256) NOT NULL DEFAULT '' COMMENT 'title',\
+&emsp;&emsp;`author` varchar(1024) NOT NULL DEFAULT '' COMMENT 'separated by comma',\
+&emsp;&emsp;`publish_time` int(11) unsigned NOT NULL DEFAULT '0' COMMENT 'time stamp',\
+&emsp;&emsp;`journal` varchar(256) NOT NULL DEFAULT '' COMMENT 'publisher',\
+&emsp;&emsp;`references` varchar(10240) NOT NULL DEFAULT '' COMMENT 'separated by comma',\
+&emsp;&emsp;`total_cites` int(11) unsigned NOT NULL DEFAULT '0' COMMENT 'total cites',\
+&emsp;&emsp;`score` int unsigned NOT NULL DEFAULT '0' COMMENT 'score',\
+&emsp;&emsp;PRIMARY KEY (`index_number`),\
+&emsp;&emsp;KEY `idx_title` (`title`),\
+&emsp;&emsp;KEY `idx_author` (`author`),\
+&emsp;&emsp;KEY `idx_journal` (`journal`)\
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='tb_gesture_teleoperation_paper_info';
 
 ## License
