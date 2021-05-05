@@ -71,29 +71,29 @@ mysql -uwork -pliziwei01 -h10.30.202.213 -P3306 db_liziwei01\
 \
 CSC3170数据表已创建\
 \
-CREATE TABLE `tb_star_user_info` (\
-&emsp;&emsp;`user_id` int unsigned NOT NULL DEFAULT '0' COMMENT 'index_number, primary key',\
-&emsp;&emsp;`name` varchar(256) NOT NULL DEFAULT '' COMMENT 'user name',\
-&emsp;&emsp;`password` varchar(256) NOT NULL DEFAULT '' COMMENT 'user password',\
-&emsp;&emsp;PRIMARY KEY (`user_id`)\
+CREATE TABLE \`tb_star_user_info\` (\
+&emsp;&emsp;\`user_id\` int unsigned NOT NULL DEFAULT '0' COMMENT 'index_number, primary key',\
+&emsp;&emsp;\`name\` varchar(256) NOT NULL DEFAULT '' COMMENT 'user name',\
+&emsp;&emsp;\`password\` varchar(256) NOT NULL DEFAULT '' COMMENT 'user password',\
+&emsp;&emsp;PRIMARY KEY (\`user_id\`)\
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='明星查询平台用户信息表';\
 \
 ERG3020数据表已创建\
 \
 建表语句：\
-CREATE TABLE `tb_gesture_teleoperation_paper_info` (\
-&emsp;&emsp;`index_number` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT 'auto increment primary key',\
-&emsp;&emsp;`title` varchar(256) NOT NULL DEFAULT '' COMMENT 'title',\
-&emsp;&emsp;`author` varchar(1024) NOT NULL DEFAULT '' COMMENT 'separated by comma',\
-&emsp;&emsp;`publish_time` int(11) unsigned NOT NULL DEFAULT '0' COMMENT 'time stamp',\
-&emsp;&emsp;`journal` varchar(256) NOT NULL DEFAULT '' COMMENT 'publisher',\
-&emsp;&emsp;`references` varchar(10240) NOT NULL DEFAULT '' COMMENT 'separated by comma',\
-&emsp;&emsp;`total_cites` int(11) unsigned NOT NULL DEFAULT '0' COMMENT 'total cites',\
-&emsp;&emsp;`score` int unsigned NOT NULL DEFAULT '0' COMMENT 'score',\
-&emsp;&emsp;PRIMARY KEY (`index_number`),\
-&emsp;&emsp;KEY `idx_title` (`title`),\
-&emsp;&emsp;KEY `idx_author` (`author`),\
-&emsp;&emsp;KEY `idx_journal` (`journal`)\
+CREATE TABLE \`tb_gesture_teleoperation_paper_info\` (\
+&emsp;&emsp;\`index_number\` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT 'auto increment primary key',\
+&emsp;&emsp;\`title\` varchar(256) NOT NULL DEFAULT '' COMMENT 'title',\
+&emsp;&emsp;\`author\` varchar(1024) NOT NULL DEFAULT '' COMMENT 'separated by comma',\
+&emsp;&emsp;\`publish_time\` int(11) unsigned NOT NULL DEFAULT '0' COMMENT 'time stamp',\
+&emsp;&emsp;\`journal\` varchar(256) NOT NULL DEFAULT '' COMMENT 'publisher',\
+&emsp;&emsp;\`references\` varchar(10240) NOT NULL DEFAULT '' COMMENT 'separated by comma',\
+&emsp;&emsp;\`total_cites\` int(11) unsigned NOT NULL DEFAULT '0' COMMENT 'total cites',\
+&emsp;&emsp;\`score\` int unsigned NOT NULL DEFAULT '0' COMMENT 'score',\
+&emsp;&emsp;PRIMARY KEY (\`index_number\`),\
+&emsp;&emsp;KEY \`idx_title\` (\`title\`),\
+&emsp;&emsp;KEY \`idx_author\` (\`author\`),\
+&emsp;&emsp;KEY \`idx_journal\` (\`journal\`)\
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='tb_gesture_teleoperation_paper_info';
 
 ## License
