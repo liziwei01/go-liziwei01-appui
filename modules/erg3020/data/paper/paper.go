@@ -59,10 +59,11 @@ func FormatPaperInfo(ctx context.Context, params searchModel.PaperSearchParams, 
 		res = append(res, map[string]interface{}{
 			"title":        v.Title,
 			"authors":      v.Authors,
-			"publish_time": timeStr,
 			"journal":      v.Journal,
+			"publish_time": timeStr,
 			"references":   v.References,
-			"point":        v.Point,
+			"total_cites":  v.TotalCites,
+			"score":        v.Score,
 		})
 	}
 	return map[string]interface{}{

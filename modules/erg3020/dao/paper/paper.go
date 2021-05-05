@@ -37,18 +37,24 @@ func GetPaperList(ctx context.Context, params searchModel.PaperSearchParams) ([]
 		return make([]paperModel.PaperInfo, 0), err
 	}
 	where := map[string]interface{}{
-		"_orderby":        "point desc",
+		"_orderby":        "score desc",
 		"_limit":          []uint{intStart, params.PageLength},
-		"title like":      params.Title,
-		"author like":     params.Authors,
 		"publish_time >=": params.StartTime,
 		"publish_time <=": params.EndTime,
-		"journal like":    params.Journal,
+	}
+	if params.Title != "" {
+		where["title like"] = params.Title
+	}
+	if params.Authors != "" {
+		where["author like"] = params.Authors
+	}
+	if params.Journal != "" {
+		where["journal like"] = params.Journal
 	}
 	columns := []string{"*"}
 	err = client.Query(ctx, PAPER_TABLE_NAME, where, columns, &res)
 	if err != nil {
-		msg := fmt.Sprintf("[GetPaperList] -> get paper list from db failed")
+		msg := fmt.Sprintf("[GetPaperList] -> get paper list from db failed with err: %s", err.Error())
 		log.Fatalln(msg)
 		return make([]paperModel.PaperInfo, 0), err
 	}
@@ -67,11 +73,17 @@ func GetPaperPagesCount(ctx context.Context, params searchModel.PaperSearchParam
 		return 0, err
 	}
 	where := map[string]interface{}{
-		"title like":      params.Title,
-		"author like":     params.Authors,
 		"publish_time >=": params.StartTime,
 		"publish_time <=": params.EndTime,
-		"journal like":    params.Journal,
+	}
+	if params.Title != "" {
+		where["title like"] = params.Title
+	}
+	if params.Authors != "" {
+		where["author like"] = params.Authors
+	}
+	if params.Journal != "" {
+		where["journal like"] = params.Journal
 	}
 	columns := []string{"count(index_number) as count"}
 	err = client.Query(ctx, PAPER_TABLE_NAME, where, columns, &paperCount)

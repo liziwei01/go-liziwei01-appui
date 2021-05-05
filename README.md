@@ -4,13 +4,11 @@ This is a school project written by liziwei from CUHK(SZ)
 
 ## Install
 
-Just git pull and go run main.go\
-在/go-liziwei01-appui/目录下使用\
-go run main.go\
-编译并运行APP
+git clone https://github.com/Bill-xyz/go-liziwei01-appui.git
+cd go-liziwei01-appui
+go run main.go
 
 ## Use
-
 
 域名和接口设置在/go-liziwei01-appui/httpapi package下\
 目前测试版本ip:port设定为\
@@ -26,8 +24,12 @@ get参数支持       说明                                                  �
 pageIndex       默认1                                                    否\
 pageLength      默认10                                                   否\
 authors         默认空                                                   否\
+title           标题                                                    否\
+journal         期刊名                                                   否\
 startTime       默认当天0:00，时间戳形式。1618761600表示2021-04-19_0:00      否\
 endTime         默认当天24:00                                             否\
+type            ?type=author&key=he和authors=he是等价的                    否\
+key                                                                     否\
 \
 返回示例：\
 {\

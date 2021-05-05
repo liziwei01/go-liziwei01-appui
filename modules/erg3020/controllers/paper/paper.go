@@ -10,13 +10,12 @@ package paper
 
 import (
 	"context"
-	"encoding/json"
-	"fmt"
 	"net/http"
 	"time"
 
 	"github.com/gogf/gf/util/gconv"
 
+	errBase "go-liziwei01-appui/modules/erg3020/model/error"
 	searchModel "go-liziwei01-appui/modules/erg3020/model/search"
 	paperService "go-liziwei01-appui/modules/erg3020/services/paper"
 )
@@ -35,23 +34,17 @@ func GetPaperList(response http.ResponseWriter, request *http.Request) {
 	params, err := inputGetPaperList(ctx, request)
 	if err != nil {
 		response.WriteHeader(400)
-		response.Write([]byte(fmt.Sprintf("controller.GetPaperList failed with err: %s", err.Error())))
+		response.Write(errBase.Marshal(nil, errBase.ErrorNoClient, err.Error()))
 		return
 	}
 	res, err := paperService.GetPaperList(ctx, params)
 	if err != nil {
 		response.WriteHeader(500)
-		response.Write([]byte(fmt.Sprintf("controller.GetPaperList failed with err: %s", err.Error())))
-		return
-	}
-	ret, err := json.Marshal(res)
-	if err != nil {
-		response.WriteHeader(500)
-		response.Write([]byte(fmt.Sprintf("controller.GetPaperList json marshal failed with err: %s", err.Error())))
+		response.Write(errBase.Marshal(nil, errBase.ErrorNoServer, err.Error()))
 		return
 	}
 	response.WriteHeader(200)
-	response.Write(ret)
+	response.Write(errBase.MarshalData(res))
 }
 
 /**
@@ -69,6 +62,19 @@ func inputGetPaperList(ctx context.Context, request *http.Request) (searchModel.
 	publishStartTimeStr := query.Get("startTime") // 按发表时间筛选
 	publishEndTimeStr := query.Get("endTime")     // 按发表时间筛选
 	journal := query.Get("journal")
+
+	types := query.Get("type")
+	key := query.Get("key")
+	switch types {
+	case "title":
+		title = key
+	case "author":
+		authors = key
+	case "journal":
+		journal = key
+	default:
+		// do nothing
+	}
 
 	pageIndex := gconv.Uint(pageIndexStr)
 	pageLength := gconv.Uint(pageLengthStr)

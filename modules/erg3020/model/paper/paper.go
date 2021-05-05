@@ -15,5 +15,6 @@ type PaperInfo struct {
 	PublishTime int64  `db:"publish_time"	json:"publish_time" c:"-"`
 	Journal     string `db:"journal" 		json:"journal" 		c:"-"`
 	References  string `db:"references" 	json:"references" 	c:"-"`
-	Point       int64  `db:"point" 			json:"point"		c:"-"`
+	TotalCites  int64  `db:"total_cites" 	json:"total_cites" 	c:"-"`
+	Score       int64  `db:"score" 			json:"score"		c:"-"`
 }

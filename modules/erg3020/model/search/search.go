@@ -13,7 +13,7 @@ type PaperSearchParams struct {
 	PageLength uint   `json:"page_length"`
 	Title      string `json:"title"`
 	Authors    string `json:"authors"`
+	Journal    string `json:"journal"`
 	StartTime  int64  `json:"start_time"`
 	EndTime    int64  `json:"end_time"`
-	Journal    string `json:"journal"`
 }
