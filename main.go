@@ -9,6 +9,8 @@
 package main
 
 import (
+	"go-liziwei01-appui/httpapi"
+
 	"github.com/liziwei01/go-liziwei01-library/bootstrap"
 )
 
@@ -19,4 +21,5 @@ import (
  */
 func main() {
 	bootstrap.Init()
+	httpapi.InitRouters()
 }
