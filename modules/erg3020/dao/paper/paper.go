@@ -13,10 +13,11 @@ import (
 	"fmt"
 	"log"
 
-	baseDao "go-liziwei01-appui/library/mysql"
 	"go-liziwei01-appui/modules/erg3020/constant"
 	paperModel "go-liziwei01-appui/modules/erg3020/model/paper"
 	searchModel "go-liziwei01-appui/modules/erg3020/model/search"
+
+	baseDao "github.com/liziwei01/go-liziwei01-library/model/mysql"
 )
 
 const (

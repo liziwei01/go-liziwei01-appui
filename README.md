@@ -4,7 +4,7 @@ This is a school project written by liziwei from CUHK(SZ)
 
 ## Install
 
-git clone https://github.com/Bill-xyz/go-liziwei01-appui.git
+git clone https://github.com/liziwei01/go-liziwei01-appui.git
 cd go-liziwei01-appui
 go run main.go
 

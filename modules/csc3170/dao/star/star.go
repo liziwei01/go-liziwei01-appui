@@ -12,10 +12,11 @@ import (
 	"context"
 	"log"
 
-	baseDao "go-liziwei01-appui/library/mysql"
 	"go-liziwei01-appui/modules/csc3170/constant"
 	searchModel "go-liziwei01-appui/modules/csc3170/model/search"
 	starModel "go-liziwei01-appui/modules/csc3170/model/star"
+
+	baseDao "github.com/liziwei01/go-liziwei01-library/model/mysql"
 )
 
 const (

@@ -9,7 +9,7 @@
 package main
 
 import (
-	"go-liziwei01-appui/bootstrap"
+	"github.com/liziwei01/go-liziwei01-library/bootstrap"
 )
 
 /**

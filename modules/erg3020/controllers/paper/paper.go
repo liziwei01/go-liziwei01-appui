@@ -15,9 +15,10 @@ import (
 
 	"github.com/gogf/gf/util/gconv"
 
-	errBase "go-liziwei01-appui/modules/erg3020/model/error"
 	searchModel "go-liziwei01-appui/modules/erg3020/model/search"
 	paperService "go-liziwei01-appui/modules/erg3020/services/paper"
+
+	errBase "github.com/liziwei01/go-liziwei01-library/model/error"
 )
 
 var ctx = context.Background()
