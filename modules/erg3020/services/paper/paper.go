@@ -4,15 +4,15 @@
  * @LastEditTime: 	2021-04-19 15:00:00
  * @LastEditors: 	liziwei01
  * @Description: 	搜索论文服务服务层：这一层提供完整的服务
- * @FilePath: 		go-liziwei01-appui/modules/erg3020/services/paper/paper.go
+ * @FilePath: 		github.com/liziwei01/go-liziwei01-appui/modules/erg3020/services/paper/paper.go
  */
 package paper
 
 import (
 	"context"
 
-	paperData "go-liziwei01-appui/modules/erg3020/data/paper"
-	searchModel "go-liziwei01-appui/modules/erg3020/model/search"
+	paperData "github.com/liziwei01/go-liziwei01-appui/modules/erg3020/data/paper"
+	searchModel "github.com/liziwei01/go-liziwei01-appui/modules/erg3020/model/search"
 )
 
 /**

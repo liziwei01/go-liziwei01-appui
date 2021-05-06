@@ -4,7 +4,7 @@
  * @LastEditTime: 	2021-04-30 20:00:00
  * @LastEditors: 	liziwei01
  * @Description: 	搜索论文服务后台控制层：这一层负责与前端交互
- * @FilePath: 		/std/go-liziwei01-appui/modules/erg3020/controllers/paper/paper.go
+ * @FilePath: 		/std/github.com/liziwei01/go-liziwei01-appui/modules/erg3020/controllers/paper/paper.go
  */
 package paper
 
@@ -15,10 +15,11 @@ import (
 
 	"github.com/gogf/gf/util/gconv"
 
-	searchModel "go-liziwei01-appui/modules/erg3020/model/search"
-	paperService "go-liziwei01-appui/modules/erg3020/services/paper"
+	searchModel "github.com/liziwei01/go-liziwei01-appui/modules/erg3020/model/search"
+	paperService "github.com/liziwei01/go-liziwei01-appui/modules/erg3020/services/paper"
 
 	errBase "github.com/liziwei01/go-liziwei01-library/model/error"
+	"github.com/liziwei01/go-liziwei01-library/model/ghttp"
 )
 
 var ctx = context.Background()
@@ -30,22 +31,18 @@ var ctx = context.Background()
  * @return {*}
  */
 func GetPaperList(response http.ResponseWriter, request *http.Request) {
-	response.Header().Set("content-type", "text/json")
-	response.Header().Set("Access-Control-Allow-Origin", "*")
+	g := ghttp.Default((*ghttp.Request)(&request), (*ghttp.Response)(&response))
 	params, err := inputGetPaperList(ctx, request)
 	if err != nil {
-		response.WriteHeader(400)
-		response.Write(errBase.Marshal(nil, errBase.ErrorNoClient, err.Error()))
+		ghttp.Write(g, params, errBase.ErrorNoClient, err)
 		return
 	}
 	res, err := paperService.GetPaperList(ctx, params)
 	if err != nil {
-		response.WriteHeader(500)
-		response.Write(errBase.Marshal(nil, errBase.ErrorNoServer, err.Error()))
+		ghttp.Write(g, res, errBase.ErrorNoServer, err)
 		return
 	}
-	response.WriteHeader(200)
-	response.Write(errBase.MarshalData(res))
+	ghttp.Write(g, res, errBase.ErrorNoSuccess, err)
 }
 
 /**

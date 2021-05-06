@@ -4,7 +4,7 @@
  * @LastEditTime: 	2021-04-19 15:00:00
  * @LastEditors: 	liziwei01
  * @Description: 	搜索论文服务数据库层：在这里访问数据库获取数据
- * @FilePath: 		go-liziwei01-appui/modules/erg3020/dao/paper/paper.go
+ * @FilePath: 		github.com/liziwei01/go-liziwei01-appui/modules/erg3020/dao/paper/paper.go
  */
 package paper
 
@@ -13,9 +13,9 @@ import (
 	"fmt"
 	"log"
 
-	"go-liziwei01-appui/modules/erg3020/constant"
-	paperModel "go-liziwei01-appui/modules/erg3020/model/paper"
-	searchModel "go-liziwei01-appui/modules/erg3020/model/search"
+	"github.com/liziwei01/go-liziwei01-appui/modules/erg3020/constant"
+	paperModel "github.com/liziwei01/go-liziwei01-appui/modules/erg3020/model/paper"
+	searchModel "github.com/liziwei01/go-liziwei01-appui/modules/erg3020/model/search"
 
 	baseDao "github.com/liziwei01/go-liziwei01-library/model/mysql"
 )

@@ -4,7 +4,7 @@
  * @LastEditTime: 	2021-04-19 15:00:00
  * @LastEditors: 	liziwei01
  * @Description: 	搜索明星服务明星模型
- * @FilePath: 		go-liziwei01-appui/modules/csc3170/model/star/star.go
+ * @FilePath: 		github.com/liziwei01/go-liziwei01-appui/modules/csc3170/model/star/star.go
  */
 package star
 

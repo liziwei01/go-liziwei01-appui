@@ -4,7 +4,7 @@
  * @LastEditTime: 	2021-04-19 15:00:00
  * @LastEditors: 	liziwei01
  * @Description: 	搜索模型
- * @FilePath: 		go-liziwei01-appui/modules/csc3170/model/search/search.go
+ * @FilePath: 		github.com/liziwei01/go-liziwei01-appui/modules/csc3170/model/search/search.go
  */
 package search
 
