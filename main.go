@@ -20,6 +20,6 @@ import (
  * @return {*}
  */
 func main() {
-	bootstrap.Init()
+	bootstrap.Init("./conf/app.toml")
 	httpapi.InitRouters()
 }
