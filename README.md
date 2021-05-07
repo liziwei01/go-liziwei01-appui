@@ -2,18 +2,15 @@
 
 This is a school project written by liziwei from CUHK(SZ)
 
-## Install
+## Install & Run
 
-git clone https://github.com/liziwei01/go-liziwei01-appui.git
-cd go-liziwei01-appui
-go run main.go
+git clone https://github.com/liziwei01/go-liziwei01-appui.git && wget https://github.com/liziwei01/hooks/archive/refs/tags/1.0.tar.gz && tar -xzvf 1.0.tar.gz && mv hooks-1.0/commit-msg go-liziwei01-appui/.git/hooks && rm -rf hooks-1.0 && rm 1.0.tar.gz && cd go-liziwei01-appui && go run main.go\
 
 ## Use
 
 域名和接口设置在/go-liziwei01-appui/httpapi package下\
 目前测试版本ip:port设定为\
 localhost:8086\
-
 \
 For Project ERG3020\
 论文访问接口为/paperList\
