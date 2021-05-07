@@ -4,14 +4,14 @@
  * @LastEditTime: 	2021-04-19 15:00:00
  * @LastEditors: 	liziwei01
  * @Description: 	分发erg3020路由
- * @FilePath: 		github.com/liziwei01/go-liziwei01-appui/modules/erg3020/routers/router.go
+ * @FilePath: 		go-liziwei01-appui/modules/erg3020/routers/router.go
  */
 package routers
 
 import (
 	"net/http"
 
-	"github.com/liziwei01/go-liziwei01-appui/modules/erg3020/controllers/paper"
+	"go-liziwei01-appui/modules/erg3020/controllers/paper"
 )
 
 /**

@@ -5,7 +5,7 @@ import (
 	"net/http"
 	"path/filepath"
 
-	"github.com/liziwei01/go-liziwei01-appui/httpapi"
+	"go-liziwei01-appui/httpapi"
 
 	"github.com/liziwei01/go-liziwei01-library/library/conf"
 	"github.com/liziwei01/go-liziwei01-library/library/env"

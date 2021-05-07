@@ -10,7 +10,7 @@ go run main.go
 
 ## Use
 
-域名和接口设置在/github.com/liziwei01/go-liziwei01-appui/httpapi package下\
+域名和接口设置在/go-liziwei01-appui/httpapi package下\
 目前测试版本ip:port设定为\
 localhost:8086\
 

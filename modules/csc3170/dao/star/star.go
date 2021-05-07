@@ -4,7 +4,7 @@
  * @LastEditTime: 	2021-04-19 15:00:00
  * @LastEditors: 	liziwei01
  * @Description: 	搜索明星服务数据库层：在这里访问数据库获取数据
- * @FilePath: 		github.com/liziwei01/go-liziwei01-appui/modules/csc3170/dao/star/star.go
+ * @FilePath: 		go-liziwei01-appui/modules/csc3170/dao/star/star.go
  */
 package star
 
@@ -12,9 +12,9 @@ import (
 	"context"
 	"log"
 
-	"github.com/liziwei01/go-liziwei01-appui/modules/csc3170/constant"
-	searchModel "github.com/liziwei01/go-liziwei01-appui/modules/csc3170/model/search"
-	starModel "github.com/liziwei01/go-liziwei01-appui/modules/csc3170/model/star"
+	"go-liziwei01-appui/modules/csc3170/constant"
+	searchModel "go-liziwei01-appui/modules/csc3170/model/search"
+	starModel "go-liziwei01-appui/modules/csc3170/model/star"
 
 	baseDao "github.com/liziwei01/go-liziwei01-library/model/mysql"
 )

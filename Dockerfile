@@ -4,4 +4,4 @@ LABEL maintainer="alssylk@gmail.com"
 RUN ["mkdir", "-p", "/home/work/go-liziwei01-appui"]
 WORKDIR /home/work/go-liziwei01-appui
 COPY . /home/work/go-liziwei01-appui
-CMD ["/home/work/github.com/liziwei01/go-liziwei01-appui/docker_run"] 
+CMD ["/home/work/go-liziwei01-appui/docker_run"] 

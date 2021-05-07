@@ -4,7 +4,7 @@
  * @LastEditTime: 	2021-04-19 15:00:00
  * @LastEditors: 	liziwei01
  * @Description: 	搜索模型
- * @FilePath: 		github.com/liziwei01/go-liziwei01-appui/modules/erg3020/model/search/search.go
+ * @FilePath: 		go-liziwei01-appui/modules/erg3020/model/search/search.go
  */
 package search
 

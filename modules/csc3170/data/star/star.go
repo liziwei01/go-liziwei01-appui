@@ -4,16 +4,16 @@
  * @LastEditTime: 	2021-04-19 15:00:00
  * @LastEditors: 	liziwei01
  * @Description: 	搜索明星服务数据层：要从数据库获取或者要写入的数据在这里处理
- * @FilePath: 		github.com/liziwei01/go-liziwei01-appui/modules/csc3170/data/star/star.go
+ * @FilePath: 		go-liziwei01-appui/modules/csc3170/data/star/star.go
  */
 package star
 
 import (
 	"context"
 
-	starDao "github.com/liziwei01/go-liziwei01-appui/modules/csc3170/dao/star"
-	searchModel "github.com/liziwei01/go-liziwei01-appui/modules/csc3170/model/search"
-	starModel "github.com/liziwei01/go-liziwei01-appui/modules/csc3170/model/star"
+	starDao "go-liziwei01-appui/modules/csc3170/dao/star"
+	searchModel "go-liziwei01-appui/modules/csc3170/model/search"
+	starModel "go-liziwei01-appui/modules/csc3170/model/star"
 )
 
 /**
