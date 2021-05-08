@@ -10,6 +10,7 @@ package paper
 
 import (
 	"context"
+	"log"
 	"net/http"
 	"time"
 
@@ -17,6 +18,7 @@ import (
 
 	searchModel "go-liziwei01-appui/modules/erg3020/model/search"
 	paperService "go-liziwei01-appui/modules/erg3020/services/paper"
+	paperScript "go-liziwei01-appui/script/erg3020/readcsv"
 
 	errBase "github.com/liziwei01/go-liziwei01-library/model/error"
 	"github.com/liziwei01/go-liziwei01-library/model/ghttp"
@@ -35,12 +37,12 @@ func GetPaperList(response http.ResponseWriter, request *http.Request) {
 	params, err := inputGetPaperList(ctx, request)
 	if err != nil {
 		ghttp.Write(g, params, errBase.ErrorNoClient, err)
-		return
+		log.Fatalln(err)
 	}
 	res, err := paperService.GetPaperList(ctx, params)
 	if err != nil {
 		ghttp.Write(g, res, errBase.ErrorNoServer, err)
-		return
+		log.Fatalln(err)
 	}
 	ghttp.Write(g, res, errBase.ErrorNoSuccess, err)
 }
@@ -84,15 +86,15 @@ func inputGetPaperList(ctx context.Context, request *http.Request) (searchModel.
 		pageIndex = gconv.Uint("1")
 	}
 	if pageLength == 0 {
-		pageLength = gconv.Uint("10")
+		pageLength = gconv.Uint("20")
 	}
 	// 默认今天
-	if publishStartTime == 0 {
+	if publishStartTime <= 0 {
 		publishStartTime, _ = getTodayTimeStamp(ctx, time.Now().Unix())
 	} else {
 		publishStartTime, _ = getTodayTimeStamp(ctx, publishStartTime)
 	}
-	if publishEndTime == 0 {
+	if publishEndTime <= 0 {
 		_, publishEndTime = getTodayTimeStamp(ctx, time.Now().Unix())
 	} else {
 		_, publishEndTime = getTodayTimeStamp(ctx, publishEndTime)
@@ -108,6 +110,34 @@ func inputGetPaperList(ctx context.Context, request *http.Request) (searchModel.
 		Journal:    journal,
 	}
 	return params, nil
+}
+
+/**
+ * @description: 搜索论文服务后台控制层处理逻辑
+ * @param {http.ResponseWriter} response
+ * @param {*http.Request} request
+ * @return {*}
+ */
+func AddPaperList(response http.ResponseWriter, request *http.Request) {
+	g := ghttp.Default((*ghttp.Request)(&request), (*ghttp.Response)(&response))
+	params, err := inputAddPaperList(ctx, request)
+	if err != nil {
+		ghttp.Write(g, params, errBase.ErrorNoClient, err)
+		log.Fatalln(err)
+	}
+	res, err := paperScript.ParseBatchCsv(ctx, params)
+	if err != nil {
+		ghttp.Write(g, res, errBase.ErrorNoServer, err)
+		log.Fatalln(err)
+	}
+	err = paperScript.AddBatchAsync(ctx, res)
+	ghttp.Write(g, res, errBase.ErrorNoSuccess, err)
+}
+
+func inputAddPaperList(ctx context.Context, request *http.Request) (string, error) {
+	query := request.URL.Query()
+	fileName := query.Get("file_name")
+	return fileName, nil
 }
 
 /**

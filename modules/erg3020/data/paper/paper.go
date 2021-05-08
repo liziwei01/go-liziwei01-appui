@@ -57,6 +57,7 @@ func FormatPaperInfo(ctx context.Context, params searchModel.PaperSearchParams, 
 	for _, v := range papersInfo {
 		timeStr := time.Unix(v.PublishTime, 0).Format("2006-01-02_15:04:05")
 		res = append(res, map[string]interface{}{
+			"index_number": v.IndexNumber,
 			"title":        v.Title,
 			"authors":      v.Authors,
 			"journal":      v.Journal,

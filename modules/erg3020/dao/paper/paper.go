@@ -10,8 +10,6 @@ package paper
 
 import (
 	"context"
-	"fmt"
-	"log"
 
 	"go-liziwei01-appui/modules/erg3020/constant"
 	paperModel "go-liziwei01-appui/modules/erg3020/model/paper"
@@ -55,8 +53,6 @@ func GetPaperList(ctx context.Context, params searchModel.PaperSearchParams) ([]
 	columns := []string{"*"}
 	err = client.Query(ctx, PAPER_TABLE_NAME, where, columns, &res)
 	if err != nil {
-		msg := fmt.Sprintf("[GetPaperList] -> get paper list from db failed with err: %s", err.Error())
-		log.Fatalln(msg)
 		return make([]paperModel.PaperInfo, 0), err
 	}
 	return res, nil
@@ -70,7 +66,6 @@ func GetPaperPagesCount(ctx context.Context, params searchModel.PaperSearchParam
 	)
 	client, err := baseDao.GetMysqlClient(ctx, constant.SERVICE_CONF_DB_NEWAPP_LIZIWEI)
 	if err != nil {
-		log.Printf("csc3170.dao.GetUserPagesCount GetMysqlClient failed with err: %s\n", err.Error())
 		return 0, err
 	}
 	where := map[string]interface{}{
@@ -89,8 +84,26 @@ func GetPaperPagesCount(ctx context.Context, params searchModel.PaperSearchParam
 	columns := []string{"count(index_number) as count"}
 	err = client.Query(ctx, PAPER_TABLE_NAME, where, columns, &paperCount)
 	if err != nil {
-		log.Printf("csc3170.dao.GetUserPagesCount Query failed with err: %s\n", err.Error())
 		return 0, err
 	}
 	return paperCount[1].Count, nil
+}
+
+func AddPaper(ctx context.Context, param paperModel.PaperInfo) error {
+	client, err := baseDao.GetMysqlClient(ctx, constant.SERVICE_CONF_DB_NEWAPP_LIZIWEI)
+	if err != nil {
+		return err
+	}
+	maps := map[string]interface{}{
+		"index_number": param.IndexNumber,
+		"title":        param.Title,
+		"author":       param.Authors,
+		"publish_time": param.PublishTime,
+		"journal":      param.Journal,
+		"ref":          param.References,
+		"total_cites":  param.TotalCites,
+		"score":        param.Score,
+	}
+	err = client.Insert(ctx, PAPER_TABLE_NAME, maps)
+	return nil
 }

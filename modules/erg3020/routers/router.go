@@ -21,4 +21,5 @@ import (
  */
 func Init() {
 	http.HandleFunc("/paperList", paper.GetPaperList)
+	http.HandleFunc("/addPaperList", paper.AddPaperList)
 }

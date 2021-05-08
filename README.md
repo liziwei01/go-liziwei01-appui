@@ -82,7 +82,7 @@ ERG3020数据表已创建\
 \
 建表语句：\
 CREATE TABLE \`tb_gesture_teleoperation_paper_info\` (\
-&emsp;&emsp;\`index_number\` bigint(20) unsigned NOT NULL AUTO_INCREMENT COMMENT 'auto increment primary key',\
+&emsp;&emsp;\`index_number\` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT 'auto increment primary key',\
 &emsp;&emsp;\`title\` varchar(256) NOT NULL DEFAULT '' COMMENT 'title',\
 &emsp;&emsp;\`author\` varchar(1024) NOT NULL DEFAULT '' COMMENT 'separated by comma',\
 &emsp;&emsp;\`publish_time\` int(11) unsigned NOT NULL DEFAULT '0' COMMENT 'time stamp',\
