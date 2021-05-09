@@ -55,11 +55,11 @@ func ParseBatchCsv(ctx context.Context, csvName string) ([]paperModel.PaperInfo,
 		}
 		params = append(params, paperModel.PaperInfo{
 			IndexNumber: gconv.Int64(line[0]),
-			Title:       "'" + line[1] + "'",
-			Authors:     "'" + line[2] + "'",
-			PublishTime: gconv.Int64(line[3]),
-			Journal:     "'" + line[4] + "'",
-			References:  "'" + line[5] + "'",
+			Title:       line[1],
+			Authors:     line[2],
+			PublishTime: year2TimeStamp(line[3]),
+			Journal:     line[4],
+			References:  line[5],
 			TotalCites:  gconv.Int64(line[6]),
 			Score:       gconv.Int64(line[7]),
 		})
@@ -67,7 +67,11 @@ func ParseBatchCsv(ctx context.Context, csvName string) ([]paperModel.PaperInfo,
 	return params, nil
 }
 
-func timeStr2Int64(timeStr string) int64 {
-	time, _ := time.Parse(STD_TIME, timeStr)
+func timeStr2Int64(layout string, timeStr string) int64 {
+	time, _ := time.Parse(layout, timeStr)
 	return time.Local().Unix()
+}
+
+func year2TimeStamp(timeStr string) int64 {
+	return timeStr2Int64("2006", timeStr)
 }

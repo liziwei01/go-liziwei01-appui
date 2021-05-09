@@ -89,12 +89,12 @@ func inputGetPaperList(ctx context.Context, request *http.Request) (searchModel.
 		pageLength = gconv.Uint("20")
 	}
 	// 默认今天
-	if publishStartTime <= 0 {
+	if publishStartTime == 0 {
 		publishStartTime, _ = getTodayTimeStamp(ctx, time.Now().Unix())
 	} else {
 		publishStartTime, _ = getTodayTimeStamp(ctx, publishStartTime)
 	}
-	if publishEndTime <= 0 {
+	if publishEndTime == 0 {
 		_, publishEndTime = getTodayTimeStamp(ctx, time.Now().Unix())
 	} else {
 		_, publishEndTime = getTodayTimeStamp(ctx, publishEndTime)

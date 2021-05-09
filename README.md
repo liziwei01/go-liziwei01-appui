@@ -88,7 +88,7 @@ CREATE TABLE \`tb_gesture_teleoperation_paper_info\` (\
 &emsp;&emsp;\`author\` varchar(1024) NOT NULL DEFAULT '' COMMENT 'separated by comma',\
 &emsp;&emsp;\`publish_time\` int(11) unsigned NOT NULL DEFAULT '0' COMMENT 'time stamp',\
 &emsp;&emsp;\`journal\` varchar(256) NOT NULL DEFAULT '' COMMENT 'publisher',\
-&emsp;&emsp;\`references\` varchar(10240) NOT NULL DEFAULT '' COMMENT 'separated by comma',\
+&emsp;&emsp;\`ref\` varchar(10240) NOT NULL DEFAULT '' COMMENT 'separated by comma',\
 &emsp;&emsp;\`total_cites\` int(11) unsigned NOT NULL DEFAULT '0' COMMENT 'total cites',\
 &emsp;&emsp;\`score\` int unsigned NOT NULL DEFAULT '0' COMMENT 'score',\
 &emsp;&emsp;PRIMARY KEY (\`index_number\`),\

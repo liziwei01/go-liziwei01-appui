@@ -10,8 +10,10 @@ package paper
 
 import (
 	"context"
+	"sort"
 	"time"
 
+	LD "go-liziwei01-appui/library/string_distance"
 	paperDao "go-liziwei01-appui/modules/erg3020/dao/paper"
 	paperModel "go-liziwei01-appui/modules/erg3020/model/paper"
 	searchModel "go-liziwei01-appui/modules/erg3020/model/search"
@@ -23,11 +25,41 @@ import (
  * @return {[]paperModel.PaperInfo}
  */
 func GetPaperList(ctx context.Context, params searchModel.PaperSearchParams) ([]paperModel.PaperInfo, error) {
+	params.PageLength = params.PageLength * 2
 	res, err := paperDao.GetPaperList(ctx, params)
 	if err != nil {
 		return make([]paperModel.PaperInfo, 0), err
 	}
-	return res, nil
+	return ScoreSimilarity(ctx, params, res), nil
+}
+
+func ScoreSimilarity(ctx context.Context, params searchModel.PaperSearchParams, papers []paperModel.PaperInfo) []paperModel.PaperInfo {
+	var (
+		key string
+		val string
+	)
+	for k, v := range papers {
+		if params.Authors != "" {
+			key = params.Authors
+			val = v.Authors
+		} else if params.Title != "" {
+			key = params.Title
+			val = v.Title
+		} else if params.Journal != "" {
+			key = params.Journal
+			val = v.Journal
+		} else {
+			return papers[:params.PageLength/2]
+		}
+		papers[k].ScoreSimilarity = LD.Ld(key, val, true)
+	}
+	sort.SliceStable(papers, func(i, j int) bool {
+		if papers[i].ScoreSimilarity < papers[j].ScoreSimilarity {
+			return true
+		}
+		return false
+	})
+	return papers[:params.PageLength/2]
 }
 
 /**
