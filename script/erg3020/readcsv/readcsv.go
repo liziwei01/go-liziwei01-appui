@@ -21,7 +21,6 @@ const (
 
 func AddBatchAsync(ctx context.Context, params []paperModel.PaperInfo) error {
 	for _, param := range params {
-		time.Sleep(100 * time.Millisecond)
 		err := paperDao.AddPaper(ctx, param)
 		if err != nil {
 			return err

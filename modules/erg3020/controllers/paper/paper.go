@@ -34,16 +34,19 @@ var ctx = context.Background()
  */
 func GetPaperList(response http.ResponseWriter, request *http.Request) {
 	g := ghttp.Default((*ghttp.Request)(&request), (*ghttp.Response)(&response))
+	// 获取前端传入的参数
 	params, err := inputGetPaperList(ctx, request)
 	if err != nil {
 		ghttp.Write(g, params, errBase.ErrorNoClient, err)
 		log.Fatalln(err)
 	}
+	// 获取根据评分和相似度排序的论文列表
 	res, err := paperService.GetPaperList(ctx, params)
 	if err != nil {
 		ghttp.Write(g, res, errBase.ErrorNoServer, err)
 		log.Fatalln(err)
 	}
+	// 返回论文列表给前端
 	ghttp.Write(g, res, errBase.ErrorNoSuccess, err)
 }
 
