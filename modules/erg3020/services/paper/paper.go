@@ -10,9 +10,12 @@ package paper
 
 import (
 	"context"
+	"time"
 
 	paperData "go-liziwei01-appui/modules/erg3020/data/paper"
 	searchModel "go-liziwei01-appui/modules/erg3020/model/search"
+
+	"github.com/gogf/gf/util/gconv"
 )
 
 /**
@@ -29,9 +32,15 @@ func GetPaperList(ctx context.Context, params searchModel.PaperSearchParams) (ma
 	if err != nil {
 		return nil, err
 	}
-	res, err := paperData.FormatPaperInfo(ctx, params, ret, pages)
-	if err != nil {
-		return nil, err
+	// res, err := paperData.FormatPaperInfo(ctx, params, ret, pages)
+	// if err != nil {
+	// 	return nil, err
+	// }
+	for k, _ := range ret {
+		ret[k].PublishTime = gconv.Int64(time.Unix(ret[k].PublishTime, 0).Format("2006"))
 	}
-	return res, nil
+	return map[string]interface{}{
+		"list":  ret,
+		"count": pages,
+	}, nil
 }

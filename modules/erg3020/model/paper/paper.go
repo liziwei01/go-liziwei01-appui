@@ -9,13 +9,13 @@
 package paper
 
 type PaperInfo struct {
-	IndexNumber     int64  `db:"index_number"	json:"index_number" c:"-"`
-	Title           string `db:"title" 			json:"title" 		c:"-"`
-	Authors         string `db:"author" 		json:"authors" 		c:"-"`
-	PublishTime     int64  `db:"publish_time"	json:"publish_time" c:"-"`
-	Journal         string `db:"journal" 		json:"journal" 		c:"-"`
-	References      string `db:"ref" 			json:"ref" 			c:"-"`
-	TotalCites      int64  `db:"total_cites" 	json:"total_cites" 	c:"-"`
-	Score           int64  `db:"score" 			json:"score"		c:"-"`
-	ScoreSimilarity int
+	IndexNumber     int64  `db:"index_number" json:"index_number"`
+	Title           string `db:"title" json:"title"`
+	Authors         string `db:"author" json:"authors"`
+	PublishTime     int64  `db:"publish_time" json:"publish_time"`
+	Journal         string `db:"journal" json:"journal"`
+	References      string `db:"ref" json:"references"`
+	TotalCites      int64  `db:"total_cites" json:"total_cites"`
+	Score           int64  `db:"score" json:"score"`
+	ScoreSimilarity int    `json:"score_similarity"`
 }

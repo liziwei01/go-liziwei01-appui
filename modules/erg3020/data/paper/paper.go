@@ -17,6 +17,8 @@ import (
 	paperDao "go-liziwei01-appui/modules/erg3020/dao/paper"
 	paperModel "go-liziwei01-appui/modules/erg3020/model/paper"
 	searchModel "go-liziwei01-appui/modules/erg3020/model/search"
+
+	"github.com/gogf/gf/util/gconv"
 )
 
 /**
@@ -33,6 +35,7 @@ func GetPaperList(ctx context.Context, params searchModel.PaperSearchParams) ([]
 	return ScoreSimilarity(ctx, params, res), nil
 }
 
+// 排序
 func ScoreSimilarity(ctx context.Context, params searchModel.PaperSearchParams, papers []paperModel.PaperInfo) []paperModel.PaperInfo {
 	var (
 		key string
@@ -49,17 +52,26 @@ func ScoreSimilarity(ctx context.Context, params searchModel.PaperSearchParams, 
 			key = params.Journal
 			val = v.Journal
 		} else {
-			return papers[:params.PageLength/2]
+			if gconv.Int(params.PageLength/2) < len(papers) {
+				return papers[:params.PageLength/2]
+			}
+			return papers
 		}
+		// 计算编辑距离
 		papers[k].ScoreSimilarity = LD.Ld(key, val, true)
 	}
+	// 按照引用分数减去编辑距离排序，两者比重各占约50%
 	sort.SliceStable(papers, func(i, j int) bool {
-		if papers[i].ScoreSimilarity < papers[j].ScoreSimilarity {
+		if (int(papers[i].Score) - papers[i].ScoreSimilarity*100) >
+			(int(papers[i].Score) - papers[i].ScoreSimilarity*100) {
 			return true
 		}
 		return false
 	})
-	return papers[:params.PageLength/2]
+	if gconv.Int(params.PageLength/2) < len(papers) {
+		return papers[:params.PageLength/2]
+	}
+	return papers
 }
 
 /**
@@ -87,7 +99,7 @@ func FormatPaperInfo(ctx context.Context, params searchModel.PaperSearchParams, 
 		res []map[string]interface{}
 	)
 	for _, v := range papersInfo {
-		timeStr := time.Unix(v.PublishTime, 0).Format("2006-01-02_15:04:05")
+		timeStr := time.Unix(v.PublishTime, 0).Format("2006")
 		res = append(res, map[string]interface{}{
 			"index_number": v.IndexNumber,
 			"title":        v.Title,
@@ -96,7 +108,7 @@ func FormatPaperInfo(ctx context.Context, params searchModel.PaperSearchParams, 
 			"publish_time": timeStr,
 			"references":   v.References,
 			"total_cites":  v.TotalCites,
-			"score":        v.Score,
+			"score":        int(v.Score) - v.ScoreSimilarity*100,
 		})
 	}
 	return map[string]interface{}{
