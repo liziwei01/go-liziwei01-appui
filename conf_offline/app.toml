@@ -8,7 +8,6 @@ APPName = "go-liziwei01-appui"
 # test     : 测试，    对应常量 env.RunModeTest
 # release  : 线上发布， 对应常量 env.RunModeRelease
 # 程序代码可以通过 env.RunMode() 获取该值
-# 详见 http://icode.baidu.com/repos/baidu/gdp/env/tree/master
 RunMode = "debug"
  
 # HTTPServer 的配置
