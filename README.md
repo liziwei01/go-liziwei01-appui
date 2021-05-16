@@ -29,6 +29,7 @@ For Project ERG3020\
 http://localhost:8086/paperList?\
 
 |get参数支持|说明|是否必传|
+| --------- | --------- | --------- |
 |pageIndex|默认1|否|
 |pageLength|默认10|否|
 |authors|默认空|否|
