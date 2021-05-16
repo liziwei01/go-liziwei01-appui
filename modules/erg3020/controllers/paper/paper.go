@@ -33,21 +33,21 @@ var ctx = context.Background()
  * @return {*}
  */
 func GetPaperList(response http.ResponseWriter, request *http.Request) {
-	g := ghttp.Default((*ghttp.Request)(&request), (*ghttp.Response)(&response))
+	g := ghttp.Default(&request, &response)
 	// 获取前端传入的参数
-	params, err := inputGetPaperList(ctx, request)
+	params, err := inputGetPaperList(ctx, g)
 	if err != nil {
-		ghttp.Write(g, params, errBase.ErrorNoClient, err)
+		g.Write(params, errBase.ErrorNoClient, err)
 		log.Fatalln(err)
 	}
 	// 获取根据评分和相似度排序的论文列表
 	res, err := paperService.GetPaperList(ctx, params)
 	if err != nil {
-		ghttp.Write(g, res, errBase.ErrorNoServer, err)
+		g.Write(res, errBase.ErrorNoServer, err)
 		log.Fatalln(err)
 	}
 	// 返回论文列表给前端
-	ghttp.Write(g, res, errBase.ErrorNoSuccess, err)
+	g.Write(res, errBase.ErrorNoSuccess, err)
 }
 
 /**
@@ -55,19 +55,18 @@ func GetPaperList(response http.ResponseWriter, request *http.Request) {
  * @param {*http.Request} request http请求
  * @return {searchModel.PaperSearchParams}
  */
-func inputGetPaperList(ctx context.Context, request *http.Request) (searchModel.PaperSearchParams, error) {
+func inputGetPaperList(ctx context.Context, g ghttp.Ghttp) (searchModel.PaperSearchParams, error) {
 	// 客户端接受的参数处理
-	query := request.URL.Query()
-	pageIndexStr := query.Get("pageIndex")   // 选择显示页，默认第1页
-	pageLengthStr := query.Get("pageLength") // 每页显示几条，默认10条
-	title := query.Get("title")
-	authors := query.Get("authors")
-	publishStartTimeStr := query.Get("startTime") // 按发表时间筛选
-	publishEndTimeStr := query.Get("endTime")     // 按发表时间筛选
-	journal := query.Get("journal")
+	pageIndexStr := g.Get("pageIndex")   // 选择显示页，默认第1页
+	pageLengthStr := g.Get("pageLength") // 每页显示几条，默认10条
+	title := g.Get("title")
+	authors := g.Get("authors")
+	publishStartTimeStr := g.Get("startTime") // 按发表时间筛选
+	publishEndTimeStr := g.Get("endTime")     // 按发表时间筛选
+	journal := g.Get("journal")
 
-	types := query.Get("type")
-	key := query.Get("key")
+	types := g.Get("type")
+	key := g.Get("key")
 	switch types {
 	case "title":
 		title = key
@@ -122,19 +121,19 @@ func inputGetPaperList(ctx context.Context, request *http.Request) (searchModel.
  * @return {*}
  */
 func AddPaperList(response http.ResponseWriter, request *http.Request) {
-	g := ghttp.Default((*ghttp.Request)(&request), (*ghttp.Response)(&response))
+	g := ghttp.Default(&request, &response)
 	params, err := inputAddPaperList(ctx, request)
 	if err != nil {
-		ghttp.Write(g, params, errBase.ErrorNoClient, err)
+		g.Write(params, errBase.ErrorNoClient, err)
 		log.Fatalln(err)
 	}
 	res, err := paperScript.ParseBatchCsv(ctx, params)
 	if err != nil {
-		ghttp.Write(g, res, errBase.ErrorNoServer, err)
+		g.Write(res, errBase.ErrorNoServer, err)
 		log.Fatalln(err)
 	}
 	err = paperScript.AddBatchAsync(ctx, res)
-	ghttp.Write(g, res, errBase.ErrorNoSuccess, err)
+	g.Write(res, errBase.ErrorNoSuccess, err)
 }
 
 func inputAddPaperList(ctx context.Context, request *http.Request) (string, error) {
