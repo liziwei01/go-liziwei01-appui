@@ -38,7 +38,7 @@ http://localhost:8086/paperList?\
 |startTime|默认当天0:00，时间戳形式。1618761600表示2021-04-19_0:00|否|
 |endTime|默认当天24:00|否|
 |type|?type=author&key=he和authors=he是等价的|否|
-|key||否\
+|key||否|
 
 返回示例：
 
