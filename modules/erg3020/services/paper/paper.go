@@ -12,10 +12,10 @@ import (
 	"context"
 	"time"
 
+	"github.com/gogf/gf/util/gconv"
+
 	paperData "go-liziwei01-appui/modules/erg3020/data/paper"
 	searchModel "go-liziwei01-appui/modules/erg3020/model/search"
-
-	"github.com/gogf/gf/util/gconv"
 )
 
 /**

@@ -10,18 +10,17 @@ package paper
 
 import (
 	"context"
-	"log"
 	"net/http"
 	"time"
 
 	"github.com/gogf/gf/util/gconv"
+	errBase "github.com/liziwei01/go-liziwei01-library/model/error"
+	"github.com/liziwei01/go-liziwei01-library/model/ghttp"
+	"github.com/liziwei01/go-liziwei01-library/model/logit"
 
 	searchModel "go-liziwei01-appui/modules/erg3020/model/search"
 	paperService "go-liziwei01-appui/modules/erg3020/services/paper"
 	paperScript "go-liziwei01-appui/script/erg3020/readcsv"
-
-	errBase "github.com/liziwei01/go-liziwei01-library/model/error"
-	"github.com/liziwei01/go-liziwei01-library/model/ghttp"
 )
 
 var ctx = context.Background()
@@ -33,18 +32,19 @@ var ctx = context.Background()
  * @return {*}
  */
 func GetPaperList(response http.ResponseWriter, request *http.Request) {
+	logit.Logger.Info("/paperList")
 	g := ghttp.Default(&request, &response)
 	// 获取前端传入的参数
 	params, err := inputGetPaperList(ctx, g)
 	if err != nil {
 		g.Write(params, errBase.ErrorNoClient, err)
-		log.Fatalln(err)
+		logit.Logger.Error(err)
 	}
 	// 获取根据评分和相似度排序的论文列表
 	res, err := paperService.GetPaperList(ctx, params)
 	if err != nil {
 		g.Write(res, errBase.ErrorNoServer, err)
-		log.Fatalln(err)
+		logit.Logger.Error(err)
 	}
 	// 返回论文列表给前端
 	g.Write(res, errBase.ErrorNoSuccess, err)
@@ -121,16 +121,17 @@ func inputGetPaperList(ctx context.Context, g ghttp.Ghttp) (searchModel.PaperSea
  * @return {*}
  */
 func AddPaperList(response http.ResponseWriter, request *http.Request) {
+	logit.Logger.Info("/addPaperList")
 	g := ghttp.Default(&request, &response)
 	params, err := inputAddPaperList(ctx, request)
 	if err != nil {
 		g.Write(params, errBase.ErrorNoClient, err)
-		log.Fatalln(err)
+		logit.Logger.Error(err)
 	}
 	res, err := paperScript.ParseBatchCsv(ctx, params)
 	if err != nil {
 		g.Write(res, errBase.ErrorNoServer, err)
-		log.Fatalln(err)
+		logit.Logger.Error(err)
 	}
 	err = paperScript.AddBatchAsync(ctx, res)
 	g.Write(res, errBase.ErrorNoSuccess, err)
