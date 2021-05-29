@@ -1,4 +1,4 @@
-module go-liziwei01-appui
+module github.com/liziwei01/go-liziwei01-appui
 
 go 1.15
 
