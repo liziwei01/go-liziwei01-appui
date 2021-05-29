@@ -1,3 +1,11 @@
+/*
+ * @Author: liziwei01
+ * @Date: 2021-04-29 15:14:24
+ * @LastEditors: liziwei01
+ * @LastEditTime: 2021-05-30 02:27:31
+ * @Description: file content
+ * @FilePath: /github.com/liziwei01/go-liziwei01-appui/script/erg3020/readcsv/readcsv.go
+ */
 package readcsv
 
 import (

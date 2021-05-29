@@ -1,10 +1,10 @@
 /*
- * @Author: 		liziwei01
- * @Date: 			2021-04-19 15:00:00
- * @LastEditTime: 	2021-04-19 15:00:00
- * @LastEditors: 	liziwei01
- * @Description: 	分发erg3020路由
- * @FilePath: 		github.com/liziwei01/go-liziwei01-appui/modules/erg3020/routers/router.go
+ * @Author: liziwei01
+ * @Date: 2021-04-19 15:00:00
+ * @LastEditTime: 2021-05-30 02:27:13
+ * @LastEditors: liziwei01
+ * @Description: 分发erg3020路由
+ * @FilePath: /github.com/liziwei01/go-liziwei01-appui/modules/erg3020/routers/router.go
  */
 package routers
 

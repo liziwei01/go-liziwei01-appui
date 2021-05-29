@@ -1,10 +1,10 @@
 /*
- * @Author: 		liziwei01
- * @Date: 			2021-04-19 15:00:00
- * @LastEditTime: 	2021-04-30 20:00:00
- * @LastEditors: 	liziwei01
- * @Description: 	搜索论文服务后台控制层：这一层负责与前端交互
- * @FilePath: 		/std/github.com/liziwei01/go-liziwei01-appui/modules/erg3020/controllers/paper/paper.go
+ * @Author: liziwei01
+ * @Date: 2021-04-19 15:00:00
+ * @LastEditTime: 2021-05-30 02:26:25
+ * @LastEditors: liziwei01
+ * @Description: 搜索论文服务后台控制层：这一层负责与前端交互
+ * @FilePath: /github.com/liziwei01/go-liziwei01-appui/modules/erg3020/controllers/paper/paper.go
  */
 package paper
 

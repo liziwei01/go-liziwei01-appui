@@ -1,2 +1,10 @@
-[2021/05/29 23:53:51 CST] [INFO] (go-liziwei01-appui/bootstrap.(*App).Start:85) APP START
-[2021/05/29 23:53:51 CST] [INFO] (go-liziwei01-appui/bootstrap.(*App).Start:87) APP listening at: 0.0.0.0:8080
+[2021/05/30 01:58:46 CST] [INFO] (github.com/liziwei01/go-liziwei01-appui/bootstrap.(*App).Start:91) APP START
+[2021/05/30 01:58:46 CST] [INFO] (github.com/liziwei01/go-liziwei01-appui/bootstrap.(*App).Start:93) APP listening at: 0.0.0.0:8080
+[2021/05/30 02:09:34 CST] [INFO] (github.com/liziwei01/go-liziwei01-appui/modules/erg3020/controllers/paper.AddPaperList:124) /addPaperList
+[2021/05/30 02:09:52 CST] [INFO] (github.com/liziwei01/go-liziwei01-appui/modules/erg3020/controllers/paper.GetPaperList:35) /paperList
+[2021/05/30 02:10:36 CST] [INFO] (github.com/liziwei01/go-liziwei01-appui/modules/erg3020/controllers/paper.GetPaperList:35) /paperList
+[2021/05/30 02:11:19 CST] [INFO] (github.com/liziwei01/go-liziwei01-appui/modules/erg3020/controllers/paper.GetPaperList:35) /paperList
+[2021/05/30 02:12:26 CST] [INFO] (github.com/liziwei01/go-liziwei01-appui/modules/erg3020/controllers/paper.GetPaperList:35) /paperList
+[2021/05/30 02:12:39 CST] [INFO] (github.com/liziwei01/go-liziwei01-appui/modules/erg3020/controllers/paper.GetPaperList:35) /paperList
+[2021/05/30 02:14:40 CST] [INFO] (github.com/liziwei01/go-liziwei01-appui/bootstrap.(*App).Start:91) APP START
+[2021/05/30 02:14:40 CST] [INFO] (github.com/liziwei01/go-liziwei01-appui/bootstrap.(*App).Start:93) APP listening at: 0.0.0.0:8080

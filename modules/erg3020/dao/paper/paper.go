@@ -1,10 +1,10 @@
 /*
- * @Author: 		liziwei01
- * @Date: 			2021-04-19 15:00:00
- * @LastEditTime: 	2021-04-19 15:00:00
- * @LastEditors: 	liziwei01
- * @Description: 	搜索论文服务数据库层：在这里访问数据库获取数据
- * @FilePath: 		github.com/liziwei01/go-liziwei01-appui/modules/erg3020/dao/paper/paper.go
+ * @Author: liziwei01
+ * @Date: 2021-04-19 15:00:00
+ * @LastEditTime: 2021-05-30 02:26:34
+ * @LastEditors: liziwei01
+ * @Description: 搜索论文服务数据库层：在这里访问数据库获取数据
+ * @FilePath: /github.com/liziwei01/go-liziwei01-appui/modules/erg3020/dao/paper/paper.go
  */
 package paper
 

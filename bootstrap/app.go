@@ -1,3 +1,12 @@
+/*
+ * @Author: liziwei01
+ * @Date: 2021-04-19 15:00:00
+ * @LastEditors: liziwei01
+ * @LastEditTime: 2021-05-30 02:24:19
+ * @Description: file content
+ * @FilePath: /github.com/liziwei01/go-liziwei01-appui/bootstrap/app.go
+ */
+
 package bootstrap
 
 import (
@@ -6,7 +15,6 @@ import (
 	"path/filepath"
 
 	"github.com/liziwei01/go-liziwei01-appui/httpapi"
-
 	"github.com/liziwei01/go-liziwei01-library/library/conf"
 	"github.com/liziwei01/go-liziwei01-library/library/env"
 	"github.com/liziwei01/go-liziwei01-library/model/logit"

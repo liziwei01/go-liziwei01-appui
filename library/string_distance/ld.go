@@ -1,3 +1,11 @@
+/*
+ * @Author: liziwei01
+ * @Date: 2021-04-19 15:00:00
+ * @LastEditors: liziwei01
+ * @LastEditTime: 2021-05-30 02:21:56
+ * @Description: file content
+ * @FilePath: /github.com/liziwei01/go-liziwei01-appui/library/string_distance/ld.go
+ */
 package string_distance
 
 import "strings"
