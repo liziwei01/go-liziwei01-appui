@@ -10,8 +10,8 @@ import (
 
 	"github.com/gogf/gf/util/gconv"
 
-	paperDao "go-liziwei01-appui/modules/erg3020/dao/paper"
-	paperModel "go-liziwei01-appui/modules/erg3020/model/paper"
+	paperDao "github.com/liziwei01/go-liziwei01-appui/modules/erg3020/dao/paper"
+	paperModel "github.com/liziwei01/go-liziwei01-appui/modules/erg3020/model/paper"
 )
 
 const (

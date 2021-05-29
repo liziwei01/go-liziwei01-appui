@@ -4,7 +4,7 @@
  * @LastEditTime: 	2021-04-19 15:00:00
  * @LastEditors: 	liziwei01
  * @Description: 	搜索论文服务数据层：要从数据库获取或者要写入的数据在这里处理
- * @FilePath: 		go-liziwei01-appui/modules/erg3020/data/paper/paper.go
+ * @FilePath: 		github.com/liziwei01/go-liziwei01-appui/modules/erg3020/data/paper/paper.go
  */
 package paper
 
@@ -13,10 +13,10 @@ import (
 	"sort"
 	"time"
 
-	LD "go-liziwei01-appui/library/string_distance"
-	paperDao "go-liziwei01-appui/modules/erg3020/dao/paper"
-	paperModel "go-liziwei01-appui/modules/erg3020/model/paper"
-	searchModel "go-liziwei01-appui/modules/erg3020/model/search"
+	LD "github.com/liziwei01/go-liziwei01-appui/library/string_distance"
+	paperDao "github.com/liziwei01/go-liziwei01-appui/modules/erg3020/dao/paper"
+	paperModel "github.com/liziwei01/go-liziwei01-appui/modules/erg3020/model/paper"
+	searchModel "github.com/liziwei01/go-liziwei01-appui/modules/erg3020/model/search"
 
 	"github.com/gogf/gf/util/gconv"
 )

@@ -4,7 +4,7 @@
  * @LastEditTime: 	2021-04-30 20:00:00
  * @LastEditors: 	liziwei01
  * @Description: 	搜索论文服务后台控制层：这一层负责与前端交互
- * @FilePath: 		/std/go-liziwei01-appui/modules/erg3020/controllers/paper/paper.go
+ * @FilePath: 		/std/github.com/liziwei01/go-liziwei01-appui/modules/erg3020/controllers/paper/paper.go
  */
 package paper
 
@@ -18,9 +18,9 @@ import (
 	"github.com/liziwei01/go-liziwei01-library/model/ghttp"
 	"github.com/liziwei01/go-liziwei01-library/model/logit"
 
-	searchModel "go-liziwei01-appui/modules/erg3020/model/search"
-	paperService "go-liziwei01-appui/modules/erg3020/services/paper"
-	paperScript "go-liziwei01-appui/script/erg3020/readcsv"
+	searchModel "github.com/liziwei01/go-liziwei01-appui/modules/erg3020/model/search"
+	paperService "github.com/liziwei01/go-liziwei01-appui/modules/erg3020/services/paper"
+	paperScript "github.com/liziwei01/go-liziwei01-appui/script/erg3020/readcsv"
 )
 
 var ctx = context.Background()
