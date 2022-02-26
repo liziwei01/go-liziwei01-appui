@@ -23,3 +23,16 @@
 /Godeps/
 
 # End of https://www.toptal.com/developers/gitignore/api/go
+
+### log ###
+# Logs
+/log/
+
+
+### vscode ###
+# Visual Studio Code
+.vscode/
+
+### data ###
+# Data
+/data/

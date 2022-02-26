@@ -1,0 +1,1 @@
+[2022/02/26 19:25:01 CST] [EROR] (github.com/liziwei01/go-liziwei01-appui/modules/erg3020/controllers/paper.GetPaperList:47) Error 1045: Access denied for user 'work'@'localhost' (using password: YES)

@@ -1,7 +1,7 @@
 /*
  * @Author: liziwei01
  * @Date: 2021-04-19 15:00:00
- * @LastEditTime: 2021-05-30 02:26:34
+ * @LastEditTime: 2022-02-26 20:02:29
  * @LastEditors: liziwei01
  * @Description: 搜索论文服务数据库层：在这里访问数据库获取数据
  * @FilePath: /github.com/liziwei01/go-liziwei01-appui/modules/erg3020/dao/paper/paper.go
@@ -50,12 +50,27 @@ func GetPaperList(ctx context.Context, params searchModel.PaperSearchParams) ([]
 	if params.Journal != "" {
 		where["journal like"] = params.Journal
 	}
-	columns := []string{"*"}
+	columns := []string{"title", "author", "publish_time", "journal", "ref", "total_cites", "score"}
 	err = client.Query(ctx, PAPER_TABLE_NAME, where, columns, &res)
 	if err != nil {
 		return make([]paperModel.PaperInfo, 0), err
 	}
 	return res, nil
+}
+
+func GetPaper(ctx context.Context, params searchModel.PaperSearchParams) (interface{}, error) {
+	var content string
+	client, err := baseDao.GetMysqlClient(ctx, constant.SERVICE_CONF_DB_NEWAPP_LIZIWEI)
+	if err != nil {
+		return content, err
+	}
+	where := map[string]interface{}{}
+	if params.Title != "" {
+		where["title like"] = params.Title
+	}
+	columns := []string{"content"}
+	err = client.Query(ctx, PAPER_TABLE_NAME, where, columns, &content)
+	return content, err
 }
 
 func GetPaperPagesCount(ctx context.Context, params searchModel.PaperSearchParams) (int64, error) {
@@ -103,6 +118,7 @@ func AddPaper(ctx context.Context, param paperModel.PaperInfo) error {
 		"ref":          param.References,
 		"total_cites":  param.TotalCites,
 		"score":        param.Score,
+		"content":      "NULL",
 	}
 	err = client.Insert(ctx, PAPER_TABLE_NAME, maps)
 	return nil

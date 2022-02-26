@@ -1,7 +1,7 @@
 /*
  * @Author: liziwei01
  * @Date: 2021-04-19 15:00:00
- * @LastEditTime: 2021-05-30 02:26:25
+ * @LastEditTime: 2022-02-26 19:57:54
  * @LastEditors: liziwei01
  * @Description: 搜索论文服务后台控制层：这一层负责与前端交互
  * @FilePath: /github.com/liziwei01/go-liziwei01-appui/modules/erg3020/controllers/paper/paper.go
@@ -33,6 +33,25 @@ var ctx = context.Background()
  */
 func GetPaperList(response http.ResponseWriter, request *http.Request) {
 	logit.Logger.Info("/paperList")
+	g := ghttp.Default(&request, &response)
+	// 获取前端传入的参数
+	params, err := inputGetPaperList(ctx, g)
+	if err != nil {
+		g.Write(params, errBase.ErrorNoClient, err)
+		logit.Logger.Error(err)
+	}
+	// 获取根据评分和相似度排序的论文列表
+	res, err := paperService.GetPaperList(ctx, params)
+	if err != nil {
+		g.Write(res, errBase.ErrorNoServer, err)
+		logit.Logger.Error(err)
+	}
+	// 返回论文列表给前端
+	g.Write(res, errBase.ErrorNoSuccess, err)
+}
+
+func GetPaper(response http.ResponseWriter, request *http.Request) {
+	logit.Logger.Info("/paper")
 	g := ghttp.Default(&request, &response)
 	// 获取前端传入的参数
 	params, err := inputGetPaperList(ctx, g)
