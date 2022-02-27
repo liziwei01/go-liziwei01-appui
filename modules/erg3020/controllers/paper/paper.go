@@ -1,7 +1,7 @@
 /*
  * @Author: liziwei01
  * @Date: 2021-04-19 15:00:00
- * @LastEditTime: 2022-02-26 19:57:54
+ * @LastEditTime: 2022-02-27 18:19:08
  * @LastEditors: liziwei01
  * @Description: 搜索论文服务后台控制层：这一层负责与前端交互
  * @FilePath: /github.com/liziwei01/go-liziwei01-appui/modules/erg3020/controllers/paper/paper.go
@@ -10,7 +10,9 @@ package paper
 
 import (
 	"context"
+	"io"
 	"net/http"
+	"os"
 	"time"
 
 	"github.com/gogf/gf/util/gconv"
@@ -59,14 +61,16 @@ func GetPaper(response http.ResponseWriter, request *http.Request) {
 		g.Write(params, errBase.ErrorNoClient, err)
 		logit.Logger.Error(err)
 	}
-	// 获取根据评分和相似度排序的论文列表
-	res, err := paperService.GetPaperList(ctx, params)
+	res, err := paperService.GetPaper(ctx, params)
 	if err != nil {
 		g.Write(res, errBase.ErrorNoServer, err)
 		logit.Logger.Error(err)
 	}
-	// 返回论文列表给前端
-	g.Write(res, errBase.ErrorNoSuccess, err)
+	response.Header().Add("Content-Type", "application/octet-stream")
+	response.Header().Add("Content-Disposition", "attachment; filename=\""+res+"\"")
+	file, _ := os.Open(res)
+	defer file.Close()
+	io.Copy(response, file)
 }
 
 /**
@@ -83,6 +87,7 @@ func inputGetPaperList(ctx context.Context, g ghttp.Ghttp) (searchModel.PaperSea
 	publishStartTimeStr := g.Get("startTime") // 按发表时间筛选
 	publishEndTimeStr := g.Get("endTime")     // 按发表时间筛选
 	journal := g.Get("journal")
+	ref := g.Get("ref")
 
 	types := g.Get("type")
 	key := g.Get("key")
@@ -129,6 +134,7 @@ func inputGetPaperList(ctx context.Context, g ghttp.Ghttp) (searchModel.PaperSea
 		StartTime:  publishStartTime,
 		EndTime:    publishEndTime,
 		Journal:    journal,
+		Ref:        ref,
 	}
 	return params, nil
 }

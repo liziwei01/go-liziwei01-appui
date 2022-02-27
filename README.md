@@ -19,28 +19,44 @@ go run main.go
 
 ## Use
 
-域名和接口设置在/go-liziwei01-appui/httpapi package下\
-目前测试版本ip:port设定为\
-localhost:8086\
+ports are unnder /go-liziwei01-appui/httpapi package\
+now default ip:port is \
+localhost:8080\
 \
+
+For crawler\
+use\
+http://localhost:8080/crawlPaper?title=SRCNN
+to crawl papers related with SRCNN
+
+use\
+http://localhost:8080/paperList?startTime=1&ref=SRCNN
+to access the SRCNN papers
+
+use\
+http://localhost:8080/paper?title=2111.15185.pdf
+to access exact paper
+
+
 For Project ERG3020\
-论文访问接口为/paperList\
-启动APP后使用以下url访问服务\
-http://localhost:8086/paperList?\
+paper acccess port is /paperList\
+use the url\
+http://localhost:8080/paperList?
+to access
 
-|get参数支持|说明|是否必传|
+|get params|comment|require|
 | --------- | --------- | --------- |
-|pageIndex|默认1|否|
-|pageLength|默认10|否|
-|authors|默认空|否|
-|title|标题|否|
-|journal|期刊名|否|
-|startTime|默认当天0:00，时间戳形式。1618761600表示2021-04-19_0:00|否|
-|endTime|默认当天24:00|否|
-|type|?type=author&key=he和authors=he是等价的|否|
-|key||否|
+|pageIndex|1|no|
+|pageLength|10|no|
+|authors|emp|no|
+|title|title|no|
+|journal|journal name|no|
+|startTime|timestamp: 1618761600 means 2021-04-19_0:00|no|
+|endTime|24:00|no|
+|type|?type=author&key=he and authors=he is equal|no|
+|key||no|
 
-返回示例：
+eg：
 
 ```bash
 {
@@ -49,7 +65,7 @@ http://localhost:8086/paperList?\
         "list":[
             {
             "authors":"liziwei01",
-            "journal":"nature",
+            "journal":"ieee",
             "point":96,
             "publish_time":"2021-04-30_23:59:59",
             "references":"maybe should be sth here",
@@ -63,30 +79,29 @@ http://localhost:8086/paperList?\
 ```
 
 For Project CSC3170\
-用户访问接口为/userList\
-post参数支持     说明      是否必传\
-name            用户名称     是\
-pageIndex       默认1       否\
-pageLength      默认10      否\
-\
-用户插入接口为/insertUser\
-post参数支持     说明      是否必传\
-name          用户名称     是\
-ID            用户id      是\
-password      用户密码     是
+/userList\
+|postParams|comment|require|
+|name|user name|yes|
+|pageIndex|1|no|
+|pageLength|10|no|
+
+/insertUser\
+|postParams|comment|require|
+|name|user name|yes|
+|ID|user id|yes|
+|password|user pwd|yes|
 
 ## Contributing
 
-library内容参考了gdp
+go-liziwei01-library refers baidu_gdp
 
 ## Database
 
-使用\
+use\
 mysql -uwork -pliziwei01 -h10.30.202.213 -P3306 db_liziwei01\
-远程登录\
+to log in mysql\
 \
-CSC3170数据表已创建\
-\
+CSC3170 table:\
 CREATE TABLE \`tb_star_user_info\` (\
         \`user_id\` int unsigned NOT NULL DEFAULT '0' COMMENT 'index_number, primary key',\
         \`name\` varchar(256) NOT NULL DEFAULT '' COMMENT 'user name',\
@@ -94,9 +109,7 @@ CREATE TABLE \`tb_star_user_info\` (\
         PRIMARY KEY (\`user_id\`)\
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='明星查询平台用户信息表';\
 \
-ERG3020数据表已创建\
-\
-建表语句：\
+ERG3020 table：\
 CREATE TABLE \`tb_gesture_teleoperation_paper_info\` (\
         \`index_number\` bigint(20) unsigned NOT NULL DEFAULT '0' COMMENT 'auto increment primary key',\
         \`title\` varchar(256) NOT NULL DEFAULT '' COMMENT 'title',\
@@ -106,6 +119,7 @@ CREATE TABLE \`tb_gesture_teleoperation_paper_info\` (\
         \`ref\` varchar(10240) NOT NULL DEFAULT '' COMMENT 'separated by comma',\
         \`total_cites\` int(11) unsigned NOT NULL DEFAULT '0' COMMENT 'total cites',\
         \`score\` int unsigned NOT NULL DEFAULT '0' COMMENT 'score',\
+        \`content\` text  COMMENT 'content',\
         PRIMARY KEY (\`index_number\`),\
         KEY \`idx_title\` (\`title\`),\
         KEY \`idx_author\` (\`author\`),\

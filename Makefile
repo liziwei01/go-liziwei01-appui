@@ -7,15 +7,15 @@ APPNAME = $(shell basename `pwd`)
 OUTPUT_FILE=${APPNAME}.tar.gz
 
 #初始化命令变量
-GOROOT  := /usr/local/go
-GO      := $(GOROOT)/bin/go
+GOROOT  := /usr/local/bin
+GO      := $(GOROOT)/go
 GOPATH  := $(shell $(GO) env GOPATH)
 GOMOD   := $(GO) mod
 GOBUILD := $(GO) build
 GOTEST  := $(GO) test
 GOPKGS  := $$($(GO) list ./...| grep -vE "vendor")
 
-SCRIPT_LIST := $(shell cd $(HOMEDIR) && ls scripts/erg3020/*/*.go && cd $(HOMEDIR))
+SCRIPT_LIST := $(shell cd $(HOMEDIR) && ls script/erg3020/*/*.go && cd $(HOMEDIR))
 SCRIPT_TARGET := $(SCRIPT_LIST:%.go=%)
 
 #执行编译，可使用命令 make 或 make all 执行, 顺序执行prepare -> compile -> test -> package 几个阶段
@@ -45,7 +45,7 @@ package-bin:
 	$(shell mkdir -p $(OUTDIR))
 	$(shell cp -a bin $(OUTDIR)/bin)
 	$(shell cp -a conf $(OUTDIR)/conf)
-	$(shell cp -a scripts $(OUTDIR)/scripts)
+	$(shell cp -a script $(OUTDIR)/script)
 	$(shell if [ -d "data_online"  ]; then cp -r data_online $(OUTDIR)/data; fi)
 	$(shell cd $(OUTDIR)/; tar -zcf ${OUTPUT_FILE} ./*; rm -rf bin conf supervise data scripts)
 
@@ -55,7 +55,7 @@ package-bin-offline:
 	$(shell mkdir -p $(OUTDIR))
 	$(shell cp -a bin $(OUTDIR)/bin)
 	$(shell cp -a conf_offline $(OUTDIR)/conf)
-	$(shell cp -a scripts $(OUTDIR)/scripts)
+	$(shell cp -a script $(OUTDIR)/script)
 	$(shell if [ -d "data"  ]; then cp -r data $(OUTDIR)/data; fi)
 	$(shell cd $(OUTDIR)/; tar -zcf ${OUTPUT_FILE} ./*; rm -rf bin conf supervise data scripts)
 

@@ -1,7 +1,7 @@
 /*
  * @Author: liziwei01
  * @Date: 2021-04-19 15:00:00
- * @LastEditTime: 2022-02-26 19:49:58
+ * @LastEditTime: 2022-02-27 18:13:20
  * @LastEditors: liziwei01
  * @Description: 搜索论文服务数据层：要从数据库获取或者要写入的数据在这里处理
  * @FilePath: /github.com/liziwei01/go-liziwei01-appui/modules/erg3020/data/paper/paper.go
@@ -11,8 +11,11 @@ package paper
 import (
 	"context"
 	"io"
+	"io/ioutil"
 	"net/http"
+	"os"
 	"regexp"
+	"time"
 
 	"github.com/gogf/gf/util/gconv"
 	paperModel "github.com/liziwei01/go-liziwei01-appui/modules/crawler/model/paper"
@@ -45,39 +48,64 @@ func crawlPaper(ctx context.Context, params searchModel.PaperSearchParams) {
 		if !continueCrawl {
 			break
 		}
-		resp, err := http.Get("https://arxiv.org/?searchtype=all&size=" + gconv.String(size) + "&query=" + params.Title + "&start=" + gconv.String(start))
+		link := "https://arxiv.org/search/?searchtype=all&size=" + gconv.String(size) + "&query=" + params.Title + "&start=" + gconv.String(start)
+		logit.Logger.Info("start search paper " + link)
+		resp, err := http.Get(link)
 		if err != nil {
 			logit.Logger.Error(err)
 			break
 		}
-		defer resp.Body.Close()
 		body, err := io.ReadAll(resp.Body)
 		if err != nil {
 			logit.Logger.Error(err)
 			break
 		}
 		pdfUrls := regexp.MustCompile(regpdf).FindAllStringSubmatch(string(body), -1)
-
+		logit.Logger.Info("get " + gconv.String(len(pdfUrls)) + " papers")
 		if len(pdfUrls) == 0 {
 			break
 		}
 		start += size
 
 		for _, url := range pdfUrls {
+			time.Sleep(time.Second * 60)
 			url := url[0][9:len(url[0])-2] + ".pdf"
+			logit.Logger.Info("start get paper " + url)
 			resp2, err := http.Get(url)
-			body2, err := io.ReadAll(resp2.Body)
+			body2, err := ioutil.ReadAll(resp2.Body)
 			if err != nil {
 				logit.Logger.Error(err)
+				continueCrawl = false
+				break
+			}
+			title := url[22:]
+			pwd, err := os.Getwd()
+			if err != nil {
+				logit.Logger.Error(err)
+				continueCrawl = false
+				break
+			}
+			path := pwd + "/data/" + title
+			err = ioutil.WriteFile(path, body2, 0644)
+			if err != nil {
+				logit.Logger.Error(err)
+				continueCrawl = false
 				break
 			}
 			paper := paperModel.PaperInfo{
-				Title:   url[22:],
+				Title:   title,
 				Ref:     params.Title,
-				Content: gconv.String(body2),
+				Content: path,
 			}
-			crawlerDao.AddPaper(ctx, paper)
+			err = crawlerDao.AddPaper(ctx, paper)
+			if err != nil {
+				logit.Logger.Error(err)
+				continueCrawl = false
+				break
+			}
 			resp2.Body.Close()
+			logit.Logger.Info("finish get paper " + url)
 		}
+		resp.Body.Close()
 	}
 }

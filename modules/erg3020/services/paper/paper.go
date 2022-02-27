@@ -1,7 +1,7 @@
 /*
  * @Author: liziwei01
  * @Date: 2021-04-19 15:00:00
- * @LastEditTime: 2022-02-26 19:58:44
+ * @LastEditTime: 2022-02-27 17:20:29
  * @LastEditors: liziwei01
  * @Description: 搜索论文服务服务层：这一层提供完整的服务
  * @FilePath: /github.com/liziwei01/go-liziwei01-appui/modules/erg3020/services/paper/paper.go
@@ -45,6 +45,6 @@ func GetPaperList(ctx context.Context, params searchModel.PaperSearchParams) (ma
 	}, nil
 }
 
-func GetPaper(ctx context.Context, params searchModel.PaperSearchParams) (interface{}, error) {
+func GetPaper(ctx context.Context, params searchModel.PaperSearchParams) (string, error) {
 	return paperData.GetPaper(ctx, params)
 }

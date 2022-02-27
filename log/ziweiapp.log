@@ -1,6 +1,0 @@
-[2022/02/26 19:22:39 CST] [INFO] (github.com/liziwei01/go-liziwei01-appui/bootstrap.(*App).Start:93) APP START
-[2022/02/26 19:22:39 CST] [INFO] (github.com/liziwei01/go-liziwei01-appui/bootstrap.(*App).Start:95) APP listening at: 0.0.0.0:8080
-[2022/02/26 19:23:57 CST] [INFO] (github.com/liziwei01/go-liziwei01-appui/bootstrap.(*App).Start:93) APP START
-[2022/02/26 19:23:57 CST] [INFO] (github.com/liziwei01/go-liziwei01-appui/bootstrap.(*App).Start:95) APP listening at: 0.0.0.0:8080
-[2022/02/26 19:25:01 CST] [INFO] (github.com/liziwei01/go-liziwei01-appui/modules/erg3020/controllers/paper.GetPaperList:35) /paperList
-[2022/02/26 19:25:01 CST] [EROR] (github.com/liziwei01/go-liziwei01-appui/modules/erg3020/controllers/paper.GetPaperList:47) Error 1045: Access denied for user 'work'@'localhost' (using password: YES)

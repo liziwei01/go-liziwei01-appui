@@ -1,7 +1,7 @@
 /*
  * @Author: liziwei01
  * @Date: 2021-04-19 15:00:00
- * @LastEditTime: 2022-02-26 19:59:29
+ * @LastEditTime: 2022-02-27 17:20:03
  * @LastEditors: liziwei01
  * @Description: 搜索论文服务数据层：要从数据库获取或者要写入的数据在这里处理
  * @FilePath: /github.com/liziwei01/go-liziwei01-appui/modules/erg3020/data/paper/paper.go
@@ -35,8 +35,12 @@ func GetPaperList(ctx context.Context, params searchModel.PaperSearchParams) ([]
 	return ScoreSimilarity(ctx, params, res), nil
 }
 
-func GetPaper(ctx context.Context, params searchModel.PaperSearchParams) (interface{}, error) {
-	return paperDao.GetPaper(ctx, params)
+func GetPaper(ctx context.Context, params searchModel.PaperSearchParams) (string, error) {
+	res, err := paperDao.GetPaper(ctx, params)
+	if err != nil {
+		return "", err
+	}
+	return res, nil
 }
 
 // 排序

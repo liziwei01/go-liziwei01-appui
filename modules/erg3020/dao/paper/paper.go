@@ -1,7 +1,7 @@
 /*
  * @Author: liziwei01
  * @Date: 2021-04-19 15:00:00
- * @LastEditTime: 2022-02-26 20:02:29
+ * @LastEditTime: 2022-02-27 18:20:40
  * @LastEditors: liziwei01
  * @Description: 搜索论文服务数据库层：在这里访问数据库获取数据
  * @FilePath: /github.com/liziwei01/go-liziwei01-appui/modules/erg3020/dao/paper/paper.go
@@ -10,6 +10,7 @@ package paper
 
 import (
 	"context"
+	"fmt"
 
 	"github.com/liziwei01/go-liziwei01-appui/modules/erg3020/constant"
 	paperModel "github.com/liziwei01/go-liziwei01-appui/modules/erg3020/model/paper"
@@ -50,6 +51,9 @@ func GetPaperList(ctx context.Context, params searchModel.PaperSearchParams) ([]
 	if params.Journal != "" {
 		where["journal like"] = params.Journal
 	}
+	if params.Ref != "" {
+		where["ref like"] = params.Ref
+	}
 	columns := []string{"title", "author", "publish_time", "journal", "ref", "total_cites", "score"}
 	err = client.Query(ctx, PAPER_TABLE_NAME, where, columns, &res)
 	if err != nil {
@@ -58,11 +62,11 @@ func GetPaperList(ctx context.Context, params searchModel.PaperSearchParams) ([]
 	return res, nil
 }
 
-func GetPaper(ctx context.Context, params searchModel.PaperSearchParams) (interface{}, error) {
-	var content string
+func GetPaper(ctx context.Context, params searchModel.PaperSearchParams) (string, error) {
+	var content []string
 	client, err := baseDao.GetMysqlClient(ctx, constant.SERVICE_CONF_DB_NEWAPP_LIZIWEI)
 	if err != nil {
-		return content, err
+		return "", err
 	}
 	where := map[string]interface{}{}
 	if params.Title != "" {
@@ -70,7 +74,10 @@ func GetPaper(ctx context.Context, params searchModel.PaperSearchParams) (interf
 	}
 	columns := []string{"content"}
 	err = client.Query(ctx, PAPER_TABLE_NAME, where, columns, &content)
-	return content, err
+	if len(content) != 1 {
+		return "", fmt.Errorf("len(content) != 1")
+	}
+	return content[0], err
 }
 
 func GetPaperPagesCount(ctx context.Context, params searchModel.PaperSearchParams) (int64, error) {
@@ -95,6 +102,9 @@ func GetPaperPagesCount(ctx context.Context, params searchModel.PaperSearchParam
 	}
 	if params.Journal != "" {
 		where["journal like"] = params.Journal
+	}
+	if params.Ref != "" {
+		where["ref like"] = params.Ref
 	}
 	columns := []string{"count(index_number) as count"}
 	err = client.Query(ctx, PAPER_TABLE_NAME, where, columns, &paperCount)

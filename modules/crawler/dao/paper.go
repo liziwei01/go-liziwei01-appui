@@ -1,7 +1,7 @@
 /*
  * @Author: liziwei01
  * @Date: 2021-04-19 15:00:00
- * @LastEditTime: 2022-02-26 20:04:20
+ * @LastEditTime: 2022-02-27 09:55:03
  * @LastEditors: liziwei01
  * @Description: 搜索论文服务数据库层：在这里访问数据库获取数据
  * @FilePath: /github.com/liziwei01/go-liziwei01-appui/modules/erg3020/dao/paper/paper.go
@@ -14,7 +14,6 @@ import (
 	"github.com/liziwei01/go-liziwei01-appui/modules/crawler/constant"
 	paperModel "github.com/liziwei01/go-liziwei01-appui/modules/crawler/model/paper"
 
-	"github.com/liziwei01/go-liziwei01-library/model/logit"
 	baseDao "github.com/liziwei01/go-liziwei01-library/model/mysql"
 )
 
@@ -33,11 +32,9 @@ func AddPaper(ctx context.Context, param paperModel.PaperInfo) error {
 		"ref":     param.Ref,
 		"content": param.Content,
 	}
-	err = client.Insert(ctx, PAPER_TABLE_NAME, maps)
+	err = client.InsertNoLog(ctx, PAPER_TABLE_NAME, maps)
 	if err != nil {
-		logit.Logger.Error("AddPaper", "err", err)
 		return err
 	}
-	logit.Logger.Info("AddPaper", "success", param)
 	return nil
 }
